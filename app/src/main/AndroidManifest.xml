@@ -17,7 +17,9 @@
             android:name="com.google.android.actions"
             android:resource="@xml/network_security_config" />
 
-        <activity android:name="com.jp.babyfood.ui.main.MainActivity">
+        <activity
+            android:name="com.jp.babyfood.ui.main.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

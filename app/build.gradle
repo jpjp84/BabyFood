@@ -50,6 +50,10 @@ dependencies {
     implementation "androidx.activity:activity:$androidx.activityVersion"
     implementation "androidx.activity:activity-ktx:$androidx.activityKtx"
 
+    implementation "androidx.recyclerview:recyclerview:$androidx.recyclerview"
+
+    implementation "com.google.android.material:material:$materialVersion"
+
     // Dagger
     implementation "com.google.dagger:dagger:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
