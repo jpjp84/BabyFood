@@ -5,7 +5,7 @@ import com.jp.babyfood.di.component.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 
-open class Todo : DaggerApplication() {
+open class BabyFood : DaggerApplication() {
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
         return DaggerAppComponent.factory().create(applicationContext)
     }

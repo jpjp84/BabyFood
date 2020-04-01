@@ -1,7 +1,7 @@
 package com.jp.babyfood.di.module
 
 import android.app.Application
-import com.jp.babyfood.Todo
+import com.jp.babyfood.BabyFood
 import dagger.Module
 import dagger.Provides
 import javax.inject.Qualifier
@@ -21,5 +21,5 @@ object AppModule {
     @JvmStatic
     @Singleton
     @Provides
-    fun provideApplication(context: Todo): Application = context
+    fun provideApplication(context: BabyFood): Application = context
 }

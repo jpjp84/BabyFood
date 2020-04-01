@@ -1,7 +1,7 @@
 package com.jp.babyfood.di.component
 
 import android.content.Context
-import com.jp.babyfood.Todo
+import com.jp.babyfood.BabyFood
 import com.jp.babyfood.di.module.AppModule
 import com.jp.babyfood.di.module.DataModule
 import com.jp.babyfood.di.module.MainModule
@@ -20,7 +20,7 @@ import javax.inject.Singleton
         MainModule::class
     ]
 )
-interface AppComponent : AndroidInjector<Todo> {
+interface AppComponent : AndroidInjector<BabyFood> {
 
     @Component.Factory
     interface Factory {
