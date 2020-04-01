@@ -1,10 +1,8 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileOptions {
@@ -17,7 +15,7 @@ android {
 
     compileSdkVersion app.compileSdkVersion
     defaultConfig {
-        applicationId "com.jp.todo"
+        applicationId "com.jp.babyfood"
         minSdkVersion app.minSdkVersion
         targetSdkVersion app.targetSdkVersion
         versionCode app.versionCode
@@ -38,7 +36,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "androidx.multidex:multidex:$androidx.multidex"
     implementation "androidx.appcompat:appcompat:$androidx.appCompat"
     implementation "androidx.core:core-ktx:$androidx.core"
@@ -50,6 +48,8 @@ dependencies {
     implementation "androidx.activity:activity:$androidx.activityVersion"
     implementation "androidx.activity:activity-ktx:$androidx.activityKtx"
 
+    implementation "androidx.navigation:navigation-fragment-ktx:$androidx.navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$androidx.navigation"
     implementation "androidx.recyclerview:recyclerview:$androidx.recyclerview"
 
     implementation "com.google.android.material:material:$materialVersion"
