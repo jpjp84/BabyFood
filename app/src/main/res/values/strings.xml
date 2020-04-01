@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Baby Food</string>
+
+    <!-- menus -->
+    <string name="menu_home">홈</string>
+    <string name="menu_history">기록</string>
 </resources>
