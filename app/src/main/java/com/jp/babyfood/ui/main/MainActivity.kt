@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.jp.babyfood.R
@@ -14,8 +15,12 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     private val appBarConfiguration: AppBarConfiguration by lazy {
         AppBarConfiguration.Builder(R.id.homeFragment, R.id.historyFragment)
-            .setDrawerLayout(viewBinding.drawerLayout)
+            .setOpenableLayout(viewBinding.drawerLayout)
             .build()
+    }
+
+    private val navController: NavController by lazy {
+        findNavController(R.id.nav_host_fragment)
     }
 
     override fun getViewModelClass(): Class<MainViewModel> = MainViewModel::class.java
@@ -31,8 +36,11 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         viewModel.updateUser()
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
     private fun setNavigation() {
-        val navController: NavController = findNavController(R.id.nav_host_fragment)
         setupActionBarWithNavController(navController, appBarConfiguration)
         viewBinding.bottomNavigation.setupWithNavController(navController)
     }
