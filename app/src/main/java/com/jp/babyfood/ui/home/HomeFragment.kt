@@ -2,18 +2,12 @@ package com.jp.babyfood.ui.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.fragment.findNavController
 import com.jp.babyfood.R
-import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.databinding.FragmentHomeBinding
 import com.jp.babyfood.ui.base.BaseFragment
-import com.jp.babyfood.util.LogUtil.makeLogTag
-import com.jp.babyfood.util.view.OnItemClickListener
 
 
-class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(),
-    OnItemClickListener<Day> {
-    private val TAG = makeLogTag(HomeFragment::class.java)
+class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
     override fun getViewModelClass(): Class<HomeViewModel> = HomeViewModel::class.java
 
@@ -27,11 +21,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(),
     }
 
     private fun setCalendarAdapter() {
-        viewBinding.homeCalendarView.adapter = CalendarAdapter(viewModel, this)
-    }
-
-    override fun onItemClick(item: Day) {
-        val action = HomeFragmentDirections.actionHomeFragmentToCalendarDetailFragment()
-        findNavController().navigate(action)
+        viewBinding.homeCalendarPager.offscreenPageLimit = 1
+        viewBinding.homeCalendarPager.adapter =
+            HomePagerAdapter(childFragmentManager, this@HomeFragment.lifecycle)
     }
 }

@@ -3,11 +3,11 @@ package com.jp.babyfood.ui.calendardetail
 import android.os.Bundle
 import android.view.View
 import com.jp.babyfood.R
-import com.jp.babyfood.databinding.FragmentHomeBinding
+import com.jp.babyfood.databinding.FragmentCalendarDetailBinding
 import com.jp.babyfood.ui.base.BaseFragment
 
 
-class CalendarDetailFragment : BaseFragment<CalendarDetailViewModel, FragmentHomeBinding>() {
+class CalendarDetailFragment : BaseFragment<CalendarDetailViewModel, FragmentCalendarDetailBinding>() {
 
     override fun getViewModelClass(): Class<CalendarDetailViewModel> =
         CalendarDetailViewModel::class.java

@@ -1,4 +1,4 @@
-package com.jp.babyfood.ui.home
+package com.jp.babyfood.ui.calendarpage
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +8,7 @@ import com.jp.babyfood.data.repository.UserRepository
 import com.jp.babyfood.ui.base.BaseViewModel
 import javax.inject.Inject
 
-class HomeViewModel @Inject constructor(
+class CalendarPageViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : BaseViewModel() {
 
@@ -20,6 +20,6 @@ class HomeViewModel @Inject constructor(
 
     fun updateCalendar() {
         _days.value = List(35) { Day(it, "test") }
-        _months.value = arrayListOf(Month(1, _days.value), Month(2, _days.value))
+        _months.value = arrayListOf(Month(1, _days.value))
     }
 }

@@ -11,17 +11,19 @@
 
         <variable
             name="viewModel"
-            type="com.jp.babyfood.ui.home.HomeViewModel" />
+            type="com.jp.babyfood.ui.calendarpage.CalendarPageViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/home_calendar_pager"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/calendar_page_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:bind_page="@{viewModel.months}" />
+            app:bind_items="@{viewModel.days}"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="7" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -23,13 +23,20 @@
         android:id="@+id/homeFragment"
         android:name="com.jp.babyfood.ui.home.HomeFragment"
         android:label="Baby Food" >
+
         <action
-            android:id="@+id/action_homeFragment_to_calendarDetailFragment"
+            android:id="@+id/action_calendarPageFragment_to_calendarDetailFragment"
             app:destination="@id/calendarDetailFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right"/>
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/calendarPageFragment"
+        android:name="com.jp.babyfood.ui.calendarpage.CalendarPageFragment"
+        android:label="Baby Food">
     </fragment>
 
     <fragment

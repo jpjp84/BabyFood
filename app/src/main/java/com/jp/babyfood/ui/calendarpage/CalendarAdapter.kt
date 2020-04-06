@@ -1,4 +1,4 @@
-package com.jp.babyfood.ui.home
+package com.jp.babyfood.ui.calendarpage
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,16 +10,20 @@ import com.jp.babyfood.databinding.RowCalendarBinding
 import com.jp.babyfood.util.view.OnItemClickListener
 
 class CalendarAdapter(
-    private val viewModel: HomeViewModel,
+    private val viewModel: CalendarPageViewModel,
     private val clickListener: OnItemClickListener<Day>
-) : ListAdapter<Day, CalendarAdapter.CalendarViewHolder>(DayDiffCallback()) {
+) : ListAdapter<Day, CalendarAdapter.CalendarViewHolder>(
+    DayDiffCallback()
+) {
 
     companion object {
         const val COLUMN_COUNT = 5
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarViewHolder {
-        return CalendarViewHolder.from(parent)
+        return CalendarViewHolder.from(
+            parent
+        )
     }
 
     override fun onBindViewHolder(holder: CalendarViewHolder, position: Int) {
@@ -29,7 +33,7 @@ class CalendarAdapter(
     class CalendarViewHolder constructor(private val binding: RowCalendarBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: HomeViewModel, items: Day, clickListener: OnItemClickListener<Day>) {
+        fun bind(viewModel: CalendarPageViewModel, items: Day, clickListener: OnItemClickListener<Day>) {
             binding.viewModel = viewModel
             binding.day = items
             binding.root.setOnClickListener { clickListener.onItemClick(items) }
@@ -39,10 +43,15 @@ class CalendarAdapter(
             fun from(parent: ViewGroup): CalendarViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = RowCalendarBinding.inflate(layoutInflater, parent, false).apply {
-                    resizeChildHeight(this, parent)
+                    resizeChildHeight(
+                        this,
+                        parent
+                    )
                 }
 
-                return CalendarViewHolder(binding)
+                return CalendarViewHolder(
+                    binding
+                )
             }
 
             private fun resizeChildHeight(binding: RowCalendarBinding, parent: ViewGroup) {
