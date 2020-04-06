@@ -2,6 +2,7 @@ package com.jp.babyfood.ui.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import com.jp.babyfood.R
 import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.databinding.FragmentHomeBinding
@@ -30,6 +31,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(),
     }
 
     override fun onItemClick(item: Day) {
-        TODO("open Food Detail Fragment")
+        val action = HomeFragmentDirections.actionHomeFragmentToCalendarDetailFragment()
+        findNavController().navigate(action)
     }
 }

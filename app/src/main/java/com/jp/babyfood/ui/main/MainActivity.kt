@@ -1,6 +1,7 @@
 package com.jp.babyfood.ui.main
 
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -10,8 +11,10 @@ import androidx.navigation.ui.setupWithNavController
 import com.jp.babyfood.R
 import com.jp.babyfood.databinding.ActivityMainBinding
 import com.jp.babyfood.ui.base.BaseActivity
+import com.jp.babyfood.util.LogUtil
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
+    private val TAG = LogUtil.makeLogTag(MainActivity::class.java)
 
     private val appBarConfiguration: AppBarConfiguration by lazy {
         AppBarConfiguration.Builder(R.id.homeFragment, R.id.historyFragment)
@@ -43,5 +46,13 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     private fun setNavigation() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         viewBinding.bottomNavigation.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.calendarDetailFragment) {
+                viewBinding.bottomNavigation.visibility = View.GONE
+                return@addOnDestinationChangedListener
+            }
+
+            viewBinding.bottomNavigation.visibility = View.VISIBLE
+        }
     }
 }

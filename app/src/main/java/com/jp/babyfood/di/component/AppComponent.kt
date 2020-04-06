@@ -17,7 +17,8 @@ import javax.inject.Singleton
         DataModule::class,
         MainModule::class,
         HomeModule::class,
-        HistoryModule::class
+        HistoryModule::class,
+        CalendarDetailModule::class
     ]
 )
 interface AppComponent : AndroidInjector<BabyFood> {

@@ -12,8 +12,7 @@ import com.jp.babyfood.util.view.OnItemClickListener
 class CalendarAdapter(
     private val viewModel: HomeViewModel,
     private val clickListener: OnItemClickListener<Day>
-) :
-    ListAdapter<Day, CalendarAdapter.CalendarViewHolder>(DayDiffCallback()) {
+) : ListAdapter<Day, CalendarAdapter.CalendarViewHolder>(DayDiffCallback()) {
 
     companion object {
         const val COLUMN_COUNT = 5
