@@ -2,9 +2,7 @@ package com.jp.babyfood.di.component
 
 import android.content.Context
 import com.jp.babyfood.BabyFood
-import com.jp.babyfood.di.module.AppModule
-import com.jp.babyfood.di.module.DataModule
-import com.jp.babyfood.di.module.MainModule
+import com.jp.babyfood.di.module.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -17,7 +15,11 @@ import javax.inject.Singleton
         AppModule::class,
         AndroidSupportInjectionModule::class,
         DataModule::class,
-        MainModule::class
+        MainModule::class,
+        HomeModule::class,
+        HistoryModule::class,
+        CalendarDetailModule::class,
+        CalendarPageModule::class
     ]
 )
 interface AppComponent : AndroidInjector<BabyFood> {
