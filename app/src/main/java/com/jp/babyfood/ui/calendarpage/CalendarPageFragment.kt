@@ -8,13 +8,11 @@ import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.databinding.FragmentCalendarPageBinding
 import com.jp.babyfood.ui.base.BaseFragment
 import com.jp.babyfood.ui.home.HomeFragmentDirections
-import com.jp.babyfood.util.LogUtil.makeLogTag
 import com.jp.babyfood.util.view.OnItemClickListener
 
 
 class CalendarPageFragment : BaseFragment<CalendarPageViewModel, FragmentCalendarPageBinding>(),
     OnItemClickListener<Day> {
-    private val TAG = makeLogTag(CalendarPageFragment::class.java)
 
     override fun getViewModelClass(): Class<CalendarPageViewModel> =
         CalendarPageViewModel::class.java
@@ -22,8 +20,13 @@ class CalendarPageFragment : BaseFragment<CalendarPageViewModel, FragmentCalenda
     override fun getViewLayoutRes(): Int = R.layout.fragment_calendar_page
 
     companion object {
-        fun newInstance(): CalendarPageFragment {
-            return CalendarPageFragment()
+        fun newInstance(month: String): CalendarPageFragment {
+            val bundle = Bundle().apply { this.putString("MONTH", month) }
+
+            val fragment = CalendarPageFragment()
+            fragment.arguments = bundle
+
+            return fragment
         }
     }
 
@@ -31,7 +34,7 @@ class CalendarPageFragment : BaseFragment<CalendarPageViewModel, FragmentCalenda
         super.onViewCreated(view, savedInstanceState)
 
         setCalendarAdapter()
-        viewModel.updateCalendar()
+        viewModel.updateCalendar(requireArguments().getString("MONTH"))
     }
 
     private fun setCalendarAdapter() {
