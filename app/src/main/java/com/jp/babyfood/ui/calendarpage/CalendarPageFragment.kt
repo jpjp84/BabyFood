@@ -8,11 +8,10 @@ import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.databinding.FragmentCalendarPageBinding
 import com.jp.babyfood.ui.base.BaseFragment
 import com.jp.babyfood.ui.home.HomeFragmentDirections
-import com.jp.babyfood.util.view.OnItemClickListener
+import com.jp.babyfood.util.EventObserver
 
 
-class CalendarPageFragment : BaseFragment<CalendarPageViewModel, FragmentCalendarPageBinding>(),
-    OnItemClickListener<Day> {
+class CalendarPageFragment : BaseFragment<CalendarPageViewModel, FragmentCalendarPageBinding>() {
 
     override fun getViewModelClass(): Class<CalendarPageViewModel> =
         CalendarPageViewModel::class.java
@@ -34,16 +33,23 @@ class CalendarPageFragment : BaseFragment<CalendarPageViewModel, FragmentCalenda
         super.onViewCreated(view, savedInstanceState)
 
         setCalendarAdapter()
+        setNavigation()
+
         viewModel.updateCalendar(requireArguments().getString("MONTH"))
     }
 
     private fun setCalendarAdapter() {
-        viewBinding.calendarPageView.adapter =
-            CalendarAdapter(viewModel, this)
+        viewBinding.calendarPageView.adapter = CalendarAdapter(viewModel)
     }
 
-    override fun onItemClick(item: Day) {
-        val action = HomeFragmentDirections.actionCalendarPageFragmentToCalendarDetailFragment()
+    private fun setNavigation() {
+        viewModel.openCalendarDetailEvent.observe(viewLifecycleOwner, EventObserver {
+            openCalendarDetail(it)
+        })
+    }
+
+    private fun openCalendarDetail(item: Day) {
+        val action = HomeFragmentDirections.actionCalendarPageFragmentToCalendarDetailFragment(item)
         findNavController().navigate(action)
     }
 }

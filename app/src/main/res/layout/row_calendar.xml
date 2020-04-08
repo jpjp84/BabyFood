@@ -19,7 +19,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_row_calendar"
+        android:background="@{day.date == 0 ? @drawable/bg_row_calendar_disable : @drawable/bg_row_calendar}"
+        android:onClick="@{ (view) -> day.date == 0 ? void : viewModel.openCalendarDetail(day)}"
         android:orientation="vertical">
 
         <TextView
