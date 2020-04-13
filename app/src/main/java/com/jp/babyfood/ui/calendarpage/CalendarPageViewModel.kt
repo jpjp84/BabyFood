@@ -26,7 +26,7 @@ class CalendarPageViewModel @Inject constructor(
             return
         }
 
-        _months.value = CalendarUtil.createMonth(Month(1, mutableListOf()))
+        _months.value = CalendarUtil.createMonth(Month(1))
     }
 
     fun openCalendarDetail(day: Day) {

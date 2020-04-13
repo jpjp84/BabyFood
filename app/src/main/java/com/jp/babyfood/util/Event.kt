@@ -16,7 +16,6 @@
 package com.jp.babyfood.util
 
 import androidx.lifecycle.Observer
-import com.jp.babyfood.util.LogUtil.LOGI
 
 /**
  * Used as a wrapper for data that is exposed via a LiveData that represents an event.
@@ -52,7 +51,6 @@ open class Event<out T>(private val content: T) {
  */
 class EventObserver<T>(private val onEventUnhandledContent: (T) -> Unit) : Observer<Event<T>> {
     override fun onChanged(event: Event<T>?) {
-        LOGI("BF_TAG", "onChange : $event")
         event?.getContentIfNotHandled()?.let {
             onEventUnhandledContent(it)
         }

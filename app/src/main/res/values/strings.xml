@@ -1,7 +1,17 @@
 <resources>
     <string name="app_name">Baby Food</string>
 
+    <!-- button -->
+    <string name="save">저장</string>
+
     <!-- menus -->
     <string name="menu_home">홈</string>
     <string name="menu_history">기록</string>
+
+    <!-- Ingredient -->
+    <string name="ingredient_title">재료 이름</string>
+    <string name="ingredient_gram">gram 수</string>
+    <string name="ingredient_eat_gram">섭취량</string>
+    <string name="ingredient_allergy">알레르기 반응</string>
+    <string name="ingredient_comment">코멘트</string>
 </resources>

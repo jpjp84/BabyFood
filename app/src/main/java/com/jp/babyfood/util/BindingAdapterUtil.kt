@@ -6,6 +6,8 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.jp.babyfood.data.entity.Day
+import com.jp.babyfood.data.entity.Ingredient
+import com.jp.babyfood.ui.calendardetail.IngredientAdapter
 import com.jp.babyfood.ui.calendarpage.CalendarAdapter
 import com.jp.babyfood.ui.home.HomePagerAdapter
 
@@ -18,6 +20,11 @@ fun bindPage(viewPager: ViewPager2, months: List<String>?) {
 @BindingAdapter("bind_items")
 fun bindItems(recyclerView: RecyclerView, days: List<Day>?) {
     (recyclerView.adapter as CalendarAdapter?)?.submitList(days!!)
+}
+
+@BindingAdapter("bind_items")
+fun bindIngredient(recyclerView: RecyclerView, ingredients: List<Ingredient>?) {
+    (recyclerView.adapter as IngredientAdapter?)?.submitList(ingredients!!)
 }
 
 @BindingAdapter("text_watcher")

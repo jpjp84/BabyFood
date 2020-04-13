@@ -21,5 +21,12 @@ class CalendarDetailFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setIngredientAdapter()
+
+        viewModel.updateIngredients(args.day)
+    }
+
+    private fun setIngredientAdapter() {
+        viewBinding.ingredientList.adapter = IngredientAdapter(viewModel)
     }
 }
