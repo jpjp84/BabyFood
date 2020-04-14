@@ -21,9 +21,14 @@ class CalendarDetailFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setCollapsingActionBar()
         setIngredientAdapter()
 
         viewModel.updateIngredients(args.day)
+    }
+
+    private fun setCollapsingActionBar() {
+//        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
     }
 
     private fun setIngredientAdapter() {

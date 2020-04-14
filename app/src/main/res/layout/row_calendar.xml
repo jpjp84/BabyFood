@@ -27,7 +27,7 @@
             android:id="@+id/calendar_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{String.valueOf(day.date)}" />
+            android:text="@{day.date == 0 ? `` : String.valueOf(day.date)}" />
 
         <TextView
             android:id="@+id/calendar_work"
