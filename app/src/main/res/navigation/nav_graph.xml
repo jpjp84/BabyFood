@@ -25,18 +25,23 @@
         android:label="Baby Food">
 
         <action
-            android:id="@+id/action_calendarPageFragment_to_calendarDetailFragment"
-            app:destination="@id/calendarDetailFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
+            android:id="@+id/action_homeFragment_to_weekCalendarFragment"
+            app:destination="@id/weekCalendarFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/calendarPageFragment"
         android:name="com.jp.babyfood.ui.calendarpage.CalendarPageFragment"
         android:label="Baby Food" />
+
+    <fragment
+        android:id="@+id/weekCalendarFragment"
+        android:name="com.jp.babyfood.ui.weekcalendar.WeekCalendarFragment"
+        android:label="Week" >
+        <action
+            android:id="@+id/action_weekCalendarFragment_to_calendarDetailFragment"
+            app:destination="@id/calendarDetailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/historyFragment"

@@ -25,4 +25,23 @@ object CalendarUtil {
         month.days.addAll(dayList)
         return month
     }
+
+    fun createWeek(year: Int, month: Int, day: Int): MutableList<Int> {
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, day)
+
+        calendar.add(Calendar.DAY_OF_MONTH, Calendar.SUNDAY - calendar.get(Calendar.DAY_OF_WEEK));
+
+        val weeks = mutableListOf(calendar[Calendar.DAY_OF_MONTH])
+        MutableList(6) {
+            if (it == 0) {
+                weeks.add(calendar[Calendar.DAY_OF_MONTH])
+                return@MutableList
+            }
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+            weeks.add(calendar[Calendar.DAY_OF_MONTH])
+        }
+
+        return weeks
+    }
 }

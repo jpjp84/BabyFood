@@ -49,7 +49,7 @@ class CalendarPageFragment : BaseFragment<CalendarPageViewModel, FragmentCalenda
     }
 
     private fun openCalendarDetail(item: Day) {
-        val action = HomeFragmentDirections.actionCalendarPageFragmentToCalendarDetailFragment(item)
+        val action = HomeFragmentDirections.actionHomeFragmentToWeekCalendarFragment()
         findNavController().navigate(action)
     }
 }
