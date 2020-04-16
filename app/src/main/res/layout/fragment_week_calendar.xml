@@ -99,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:orientation="horizontal"
-            app:bind_items="@{viewModel.months.days}"
+            app:bind_items="@{viewModel.days}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
