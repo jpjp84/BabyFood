@@ -22,7 +22,7 @@
             android:id="@+id/calendar_page_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:bind_items="@{viewModel.months.days}"
+            app:bind_items="@{viewModel.months}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="7" />
     </androidx.constraintlayout.widget.ConstraintLayout>

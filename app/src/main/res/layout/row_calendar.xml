@@ -13,6 +13,9 @@
 
         <variable
             name="viewModel"
+            type="com.jp.babyfood.ui.home.HomeViewModel" />
+        <variable
+            name="viewModel2"
             type="com.jp.babyfood.ui.calendarpage.CalendarPageViewModel" />
     </data>
 
@@ -27,7 +30,7 @@
             android:id="@+id/calendar_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{day.date == 0 ? `` : String.valueOf(day.date)}" />
+            android:text="@{day.date == 0 ? `` : String.valueOf(day.getDateToClass())}" />
 
         <TextView
             android:id="@+id/calendar_work"

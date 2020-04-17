@@ -9,7 +9,6 @@ import com.jp.babyfood.data.repository.UserRepository
 import com.jp.babyfood.ui.base.BaseViewModel
 import com.jp.babyfood.util.CalendarUtil
 import com.jp.babyfood.util.Event
-import com.jp.babyfood.util.LogUtil.LOGI
 import javax.inject.Inject
 
 class WeekCalendarViewModel @Inject constructor(
@@ -34,7 +33,6 @@ class WeekCalendarViewModel @Inject constructor(
         _days.value = CalendarUtil.createWeek(2020, 3, 1)
         _days.value!!.addAll(0, CalendarUtil.createWeek(2020, 2, 25))
         _days.value!!.addAll(CalendarUtil.createWeek(2020, 3, 8))
-        LOGI("BF_TAG", "day : ${_days.value}")
     }
 
     fun updateCalendar(isNeedNewPrev: Boolean) {

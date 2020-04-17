@@ -4,18 +4,18 @@ import android.text.TextWatcher
 import android.widget.AutoCompleteTextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
 import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.data.entity.Ingredient
 import com.jp.babyfood.ui.calendardetail.IngredientAdapter
 import com.jp.babyfood.ui.calendarpage.CalendarAdapter
-import com.jp.babyfood.ui.home.HomePagerAdapter
+import com.jp.babyfood.ui.home.HomeCalendarPageAdapter
 import com.jp.babyfood.ui.weekcalendar.WeekCalendarAdapter
 
 
 @BindingAdapter("bind_page")
-fun bindPage(viewPager: ViewPager2, months: List<String>?) {
-    (viewPager.adapter as HomePagerAdapter?)?.setPage(months!!)
+fun bindPage(recyclerView: RecyclerView, months: Map<String, List<Day>>?) {
+//    (viewPager.adapter as HomePagerAdapter?)?.setPage(months!!)
+    (recyclerView.adapter as HomeCalendarPageAdapter?)?.submitMap(months!!)
 }
 
 @BindingAdapter("bind_items")

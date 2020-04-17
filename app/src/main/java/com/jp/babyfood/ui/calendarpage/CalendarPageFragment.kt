@@ -7,7 +7,8 @@ import com.jp.babyfood.R
 import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.databinding.FragmentCalendarPageBinding
 import com.jp.babyfood.ui.base.BaseFragment
-import com.jp.babyfood.ui.home.HomeFragmentDirections
+import com.jp.babyfood.util.Constants.KEY_DAYS
+import com.jp.babyfood.util.Constants.KEY_MONTH
 import com.jp.babyfood.util.EventObserver
 
 
@@ -19,8 +20,11 @@ class CalendarPageFragment : BaseFragment<CalendarPageViewModel, FragmentCalenda
     override fun getViewLayoutRes(): Int = R.layout.fragment_calendar_page
 
     companion object {
-        fun newInstance(month: String): CalendarPageFragment {
-            val bundle = Bundle().apply { this.putString("MONTH", month) }
+        fun newInstance(month: String, days: List<Day>): CalendarPageFragment {
+            val bundle = Bundle().apply {
+                this.putString(KEY_MONTH, month)
+                this.putParcelableArray(KEY_DAYS, days.toTypedArray())
+            }
 
             val fragment = CalendarPageFragment()
             fragment.arguments = bundle
@@ -35,7 +39,10 @@ class CalendarPageFragment : BaseFragment<CalendarPageViewModel, FragmentCalenda
         setCalendarAdapter()
         setNavigation()
 
-        viewModel.updateCalendar(requireArguments().getString("MONTH"))
+        viewModel.updateCalendar(
+//            requireArguments().getString(KEY_MONTH),
+//            requireArguments().getParcelableArray(KEY_DAYS)?.map { it as Day }!!.toList()
+        )
     }
 
     private fun setCalendarAdapter() {
@@ -49,7 +56,8 @@ class CalendarPageFragment : BaseFragment<CalendarPageViewModel, FragmentCalenda
     }
 
     private fun openCalendarDetail(item: Day) {
-        val action = HomeFragmentDirections.actionHomeFragmentToWeekCalendarFragment()
+        val action = CalendarPageFragmentDirections.actionCalendarPageFragmentToWeekCalendarFragment()
+//        val action = HomeFragmentDirections.actionHomeFragmentToWeekCalendarFragment()
         findNavController().navigate(action)
     }
 }

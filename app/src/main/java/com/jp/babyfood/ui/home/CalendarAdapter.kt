@@ -1,4 +1,4 @@
-package com.jp.babyfood.ui.calendarpage
+package com.jp.babyfood.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.databinding.RowCalendarBinding
+import com.jp.babyfood.util.LogUtil
 
-class CalendarAdapter(private val viewModel: CalendarPageViewModel) :
+class CalendarAdapter(private val viewModel: HomeViewModel) :
     ListAdapter<Day, CalendarAdapter.CalendarViewHolder>(DayDiffCallback()) {
 
     companion object {
@@ -20,16 +21,16 @@ class CalendarAdapter(private val viewModel: CalendarPageViewModel) :
     }
 
     override fun onBindViewHolder(holder: CalendarViewHolder, position: Int) {
-//        holder.bind(viewModel, getItem(position))
+        holder.bind(viewModel, getItem(position))
     }
 
     class CalendarViewHolder constructor(private val binding: RowCalendarBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-//        fun bind(viewModel: CalendarPageViewModel, items: Day) {
-//            binding.viewModel = viewModel
-//            binding.day = items
-//        }
+        fun bind(viewModel: HomeViewModel, items: Day) {
+            binding.viewModel = viewModel
+            binding.day = items
+        }
 
         companion object {
             fun from(parent: ViewGroup): CalendarViewHolder {

@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.jp.babyfood.R
 import com.jp.babyfood.databinding.ActivityMainBinding
 import com.jp.babyfood.ui.base.BaseActivity
@@ -29,7 +30,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        setSupportActionBar(viewBinding.mainToolbar)
+        setSupportActionBar(viewBinding.mainToolbar)
         setNavigation()
 
         viewModel.updateUser()
@@ -40,6 +41,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     }
 
     private fun setNavigation() {
-//        setupActionBarWithNavController(navController, appBarConfiguration)
+        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 }
