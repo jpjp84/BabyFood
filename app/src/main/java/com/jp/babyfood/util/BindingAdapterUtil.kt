@@ -10,12 +10,12 @@ import com.jp.babyfood.ui.calendardetail.IngredientAdapter
 import com.jp.babyfood.ui.calendarpage.CalendarAdapter
 import com.jp.babyfood.ui.home.HomeCalendarPageAdapter
 import com.jp.babyfood.ui.weekcalendar.WeekCalendarAdapter
+import java.time.YearMonth
 
 
 @BindingAdapter("bind_page")
-fun bindPage(recyclerView: RecyclerView, months: Map<String, List<Day>>?) {
-//    (viewPager.adapter as HomePagerAdapter?)?.setPage(months!!)
-    (recyclerView.adapter as HomeCalendarPageAdapter?)?.submitMap(months!!)
+fun bindPage(recyclerView: RecyclerView, months: List<YearMonth>?) {
+    (recyclerView.adapter as HomeCalendarPageAdapter?)?.submitList(months!!)
 }
 
 @BindingAdapter("bind_items")

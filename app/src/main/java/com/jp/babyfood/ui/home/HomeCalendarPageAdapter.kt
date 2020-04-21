@@ -5,30 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.databinding.RowCalendarPageBinding
-import com.jp.babyfood.util.LogUtil
+import java.time.YearMonth
 
 class HomeCalendarPageAdapter(private val viewModel: HomeViewModel) :
-    ListAdapter<String, HomeCalendarPageAdapter.CalendarPageViewHolder>(MonthDiffCallback()) {
-
-    private val months = mutableMapOf<String, List<Day>>()
+    ListAdapter<YearMonth, HomeCalendarPageAdapter.CalendarPageViewHolder>(MonthDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarPageViewHolder {
         return CalendarPageViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: CalendarPageViewHolder, position: Int) {
-        LogUtil.LOGI("BF_TAG", "onBindViewHolder -> ${months.size}")
-        months[getItem(position)]?.let { holder.bind(viewModel, it) }
-    }
-
-    fun submitMap(months: Map<String, List<Day>>) {
-        this.months.clear()
-        this.months.putAll(months)
-        submitList(months.keys.toList())
-
-        LogUtil.LOGI("BF_TAG", "submit map -> ${months.size}")
+        holder.bind(viewModel, getItem(position))
     }
 
     class CalendarPageViewHolder constructor(private val binding: RowCalendarPageBinding) :
@@ -36,11 +24,11 @@ class HomeCalendarPageAdapter(private val viewModel: HomeViewModel) :
 
         private lateinit var adapter: CalendarAdapter
 
-        fun bind(viewModel: HomeViewModel, items: List<Day>) {
+        fun bind(viewModel: HomeViewModel, yearMonth: YearMonth) {
             binding.viewModel = viewModel
             adapter = CalendarAdapter(viewModel)
             binding.calendarPageView.adapter = adapter
-            adapter.submitList(items)
+            adapter.submitList(viewModel.getDaysByYearMonth(yearMonth))
         }
 
         companion object {
@@ -54,12 +42,12 @@ class HomeCalendarPageAdapter(private val viewModel: HomeViewModel) :
     }
 }
 
-class MonthDiffCallback : DiffUtil.ItemCallback<String>() {
-    override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+class MonthDiffCallback : DiffUtil.ItemCallback<YearMonth>() {
+    override fun areItemsTheSame(oldItem: YearMonth, newItem: YearMonth): Boolean {
         return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+    override fun areContentsTheSame(oldItem: YearMonth, newItem: YearMonth): Boolean {
         return oldItem == newItem
     }
 }

@@ -11,6 +11,7 @@ import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.databinding.FragmentHomeBinding
 import com.jp.babyfood.ui.base.BaseFragment
 import com.jp.babyfood.util.EventObserver
+import com.jp.babyfood.util.LogUtil.LOGI
 
 
 class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
@@ -25,18 +26,18 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         setCalendarPager()
-        viewModel.updateCalendar()
+        viewModel.initMonth()
 
         setNavigation()
     }
 
     private fun setCalendarPager() {
         adapter = adapter ?: HomeCalendarPageAdapter(viewModel).also {
-            viewBinding.homeCalendarPager.adapter = it
             val pagerSnapHelper = PagerSnapHelper().also { helper ->
                 helper.attachToRecyclerView(viewBinding.homeCalendarPager)
             }
 
+            viewBinding.homeCalendarPager.adapter = it
             viewBinding.homeCalendarPager.addOnScrollListener(object :
                 RecyclerView.OnScrollListener() {
                 var scrolledPosition = 0
@@ -50,11 +51,11 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
 
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        if (scrolledPosition == 0 && viewModel.loadCalendar()) {
-                            recyclerView.adapter?.notifyItemInserted(0)
-                        }
+                    if (newState != RecyclerView.SCROLL_STATE_IDLE || scrolledPosition != 0) {
+                        return
                     }
+
+                    viewModel.updatePrevMonth()
                 }
             }).apply {
                 viewBinding.homeCalendarPager.scrollToPosition(1)
@@ -66,8 +67,10 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         viewModel.openCalendarDetailEvent.observe(viewLifecycleOwner, EventObserver {
             openCalendarDetail(it)
         })
-        viewModel.yearMonth.observe(viewLifecycleOwner, Observer {
-            it?.let((adapter as HomeCalendarPageAdapter)::submitMap)
+        viewModel.months.observe(viewLifecycleOwner, Observer {
+            LOGI("BF_TAG", "change months")
+            it?.let((adapter as HomeCalendarPageAdapter)::submitList)
+            viewBinding.homeCalendarPager.adapter?.notifyItemInserted(0)
         })
     }
 
