@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jp.babyfood.databinding.RowCalendarPageBinding
+import com.jp.babyfood.util.LogUtil.LOGI
 import java.time.YearMonth
 
 class HomeCalendarPageAdapter(private val viewModel: HomeViewModel) :
@@ -17,6 +18,11 @@ class HomeCalendarPageAdapter(private val viewModel: HomeViewModel) :
 
     override fun onBindViewHolder(holder: CalendarPageViewHolder, position: Int) {
         holder.bind(viewModel, getItem(position))
+    }
+
+    override fun submitList(list: List<YearMonth>?) {
+        super.submitList(list)
+        LOGI("BF_TAG", "submit1")
     }
 
     class CalendarPageViewHolder constructor(private val binding: RowCalendarPageBinding) :

@@ -7,13 +7,14 @@ import com.jp.babyfood.data.repository.UserRepository
 import com.jp.babyfood.ui.base.BaseViewModel
 import com.jp.babyfood.util.CalendarUtil
 import com.jp.babyfood.util.Event
+import com.jp.babyfood.util.dispatchers.HomePagerScrollDispatcher
 import com.jp.babyfood.util.notifyDataChange
 import java.time.YearMonth
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
     private val userRepository: UserRepository
-) : BaseViewModel() {
+) : BaseViewModel(), HomePagerScrollDispatcher.OnFirstPage {
 
     private val _months = MutableLiveData<MutableList<YearMonth>>(mutableListOf())
     val months: LiveData<MutableList<YearMonth>> = _months
@@ -30,7 +31,7 @@ class HomeViewModel @Inject constructor(
         _months.value = mutableListOf(prevYearMonth, currentYearMonth)
     }
 
-    fun updatePrevMonth() {
+    override fun onUpdate() {
         _months.value?.let { yearMonths ->
             val prevYearMonth = yearMonths[0].minusMonths(1)
             if (yearMonths.contains(prevYearMonth)) {

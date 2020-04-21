@@ -11,10 +11,14 @@ import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.databinding.FragmentHomeBinding
 import com.jp.babyfood.ui.base.BaseFragment
 import com.jp.babyfood.util.EventObserver
-import com.jp.babyfood.util.LogUtil.LOGI
+import com.jp.babyfood.util.dispatchers.HomePagerScrollDispatcher
+import javax.inject.Inject
 
 
 class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
+
+    @Inject
+    lateinit var scrollDispatcher: HomePagerScrollDispatcher
 
     private var adapter: HomeCalendarPageAdapter? = null
 
@@ -26,49 +30,49 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         setCalendarPager()
-        viewModel.initMonth()
-
         setNavigation()
+
+        viewModel.initMonth()
     }
 
     private fun setCalendarPager() {
-        adapter = adapter ?: HomeCalendarPageAdapter(viewModel).also {
-            val pagerSnapHelper = PagerSnapHelper().also { helper ->
-                helper.attachToRecyclerView(viewBinding.homeCalendarPager)
-            }
+        if (adapter != null) {
+            return
+        }
 
-            viewBinding.homeCalendarPager.adapter = it
-            viewBinding.homeCalendarPager.addOnScrollListener(object :
-                RecyclerView.OnScrollListener() {
-                var scrolledPosition = 0
+        viewBinding.homeCalendarPager.apply {
+            val pagerSnapHelper = PagerSnapHelper()
+            pagerSnapHelper.attachToRecyclerView(this)
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
 
-                    scrolledPosition =
+                    scrollDispatcher.saveScrollPosition(
                         pagerSnapHelper.findTargetSnapPosition(recyclerView.layoutManager, dx, dy)
+                    )
                 }
 
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
 
-                    if (newState != RecyclerView.SCROLL_STATE_IDLE || scrolledPosition != 0) {
-                        return
-                    }
-
-                    viewModel.updatePrevMonth()
+                    scrollDispatcher.onScrollStateChanged(newState, viewModel)
                 }
-            }).apply {
-                viewBinding.homeCalendarPager.scrollToPosition(1)
-            }
+            })
+            adapter = HomeCalendarPageAdapter(viewModel)
+            scrollToPosition(1)
         }
+
+        adapter = viewBinding.homeCalendarPager.adapter as HomeCalendarPageAdapter
     }
 
     private fun setNavigation() {
         viewModel.openCalendarDetailEvent.observe(viewLifecycleOwner, EventObserver {
             openCalendarDetail(it)
         })
+
         viewModel.months.observe(viewLifecycleOwner, Observer {
-            LOGI("BF_TAG", "change months")
             it?.let((adapter as HomeCalendarPageAdapter)::submitList)
             viewBinding.homeCalendarPager.adapter?.notifyItemInserted(0)
         })
