@@ -1,4 +1,4 @@
-package com.jp.babyfood.ui.calendarpage
+package com.jp.babyfood.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,36 +7,28 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.databinding.RowCalendarBinding
-import com.jp.babyfood.util.view.OnItemClickListener
 
-class CalendarAdapter(
-    private val viewModel: CalendarPageViewModel,
-    private val clickListener: OnItemClickListener<Day>
-) : ListAdapter<Day, CalendarAdapter.CalendarViewHolder>(
-    DayDiffCallback()
-) {
+class CalendarAdapter(private val viewModel: HomeViewModel) :
+    ListAdapter<Day, CalendarAdapter.CalendarViewHolder>(DayDiffCallback()) {
 
     companion object {
-        const val COLUMN_COUNT = 5
+        const val COLUMN_COUNT = 6
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarViewHolder {
-        return CalendarViewHolder.from(
-            parent
-        )
+        return CalendarViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: CalendarViewHolder, position: Int) {
-        holder.bind(viewModel, getItem(position), clickListener)
+        holder.bind(viewModel, getItem(position))
     }
 
     class CalendarViewHolder constructor(private val binding: RowCalendarBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: CalendarPageViewModel, items: Day, clickListener: OnItemClickListener<Day>) {
+        fun bind(viewModel: HomeViewModel, items: Day) {
             binding.viewModel = viewModel
             binding.day = items
-            binding.root.setOnClickListener { clickListener.onItemClick(items) }
         }
 
         companion object {

@@ -1,3 +1,5 @@
 package com.jp.babyfood.data.entity
 
-data class Month(val month: Int, val days: List<Day>?)
+import java.io.Serializable
+
+data class Month(val month: Int, val days: MutableList<Day> = mutableListOf()) : Serializable

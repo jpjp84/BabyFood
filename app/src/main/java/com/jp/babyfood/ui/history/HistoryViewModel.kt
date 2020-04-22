@@ -6,6 +6,4 @@ import javax.inject.Inject
 
 class HistoryViewModel @Inject constructor(
     private val userRepository: UserRepository
-) : BaseViewModel() {
-
-}
+) : BaseViewModel()

@@ -22,21 +22,11 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.jp.babyfood.ui.home.HomeFragment"
-        android:label="Baby Food" >
+        android:label="Baby Food">
 
         <action
             android:id="@+id/action_calendarPageFragment_to_calendarDetailFragment"
-            app:destination="@id/calendarDetailFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/calendarPageFragment"
-        android:name="com.jp.babyfood.ui.calendarpage.CalendarPageFragment"
-        android:label="Baby Food">
+            app:destination="@id/calendarDetailFragment" />
     </fragment>
 
     <fragment
@@ -47,7 +37,12 @@
     <fragment
         android:id="@+id/calendarDetailFragment"
         android:name="com.jp.babyfood.ui.calendardetail.CalendarDetailFragment"
-        android:label="Add Day" />
+        android:label="Add Day">
+        <argument
+            android:name="day"
+            app:argType="com.jp.babyfood.data.entity.Day" />
+    </fragment>
+
     <argument
         android:name="userMessage"
         android:defaultValue="0" />

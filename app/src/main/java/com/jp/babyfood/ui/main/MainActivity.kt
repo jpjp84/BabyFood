@@ -42,14 +42,5 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     private fun setNavigation() {
         setupActionBarWithNavController(navController, appBarConfiguration)
-//        viewBinding.bottomNavigation.setupWithNavController(navController)
-//        navController.addOnDestinationChangedListener { _, destination, _ ->
-//            if (destination.id == R.id.calendarDetailFragment) {
-//                viewBinding.bottomNavigation.visibility = View.GONE
-//                return@addOnDestinationChangedListener
-//            }
-//
-//            viewBinding.bottomNavigation.visibility = View.VISIBLE
-//        }
     }
 }

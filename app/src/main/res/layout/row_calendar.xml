@@ -13,20 +13,21 @@
 
         <variable
             name="viewModel"
-            type="com.jp.babyfood.ui.calendarpage.CalendarPageViewModel" />
+            type="com.jp.babyfood.ui.home.HomeViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_row_calendar"
+        android:background="@{day.date == 0 ? @drawable/bg_row_calendar_disable : @drawable/bg_row_calendar}"
+        android:onClick="@{ (view) -> day.date == 0 ? void : viewModel.openCalendarDetail(day)}"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/calendar_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{String.valueOf(day.date)}" />
+            android:text="@{day.date == 0 ? `` : String.valueOf(day.getDateToClass())}" />
 
         <TextView
             android:id="@+id/calendar_work"

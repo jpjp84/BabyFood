@@ -5,10 +5,6 @@ apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
-    compileOptions {
-        targetCompatibility = "8"
-        sourceCompatibility = "8"
-    }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
@@ -70,7 +66,10 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxkotlin:$rx.kotlin"
     implementation "io.reactivex.rxjava2:rxandroid:$rx.android"
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    implementation 'com.github.tylersuehr7:chips-input-layout:2.3'
+
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }

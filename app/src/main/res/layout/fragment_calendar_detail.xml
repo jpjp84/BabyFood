@@ -14,15 +14,118 @@
             type="com.jp.babyfood.ui.calendardetail.CalendarDetailViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="com.jp.babyfood.ui.main.MainActivity"
+        tools:showIn="@layout/activity_main">
 
-        <TextView
-            android:id="@+id/home_calendar_view"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Detail View" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:background="@color/baseBackgroundColor">
+
+            <ImageView
+                android:id="@+id/detail_app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_sample"
+                app:layout_constraintBottom_toTopOf="@id/title_input"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/title_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/ingredient_list"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_app_bar">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/food_name_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="이유식 이름"
+                    android:text="@={viewModel.food.title}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ingredient_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:bind_items="@{viewModel.ingredients}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@id/ingredient_allergy_text"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_input" />
+
+            <TextView
+                android:id="@+id/ingredient_allergy_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ingredient_allergy_title"
+                app:layout_constraintBottom_toTopOf="@id/ingredient_allergy_radiogroup"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ingredient_list" />
+
+            <RadioGroup
+                android:id="@+id/ingredient_allergy_radiogroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkedButton="@={viewModel.food.allergy}"
+                app:layout_constraintBottom_toTopOf="@id/ingredient_comment_text"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ingredient_list">
+
+                <RadioButton
+                    android:id="@+id/ingredient_allergy_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ingredient_allergy" />
+
+                <RadioButton
+                    android:id="@+id/ingredient_emesis_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ingredient_emesis" />
+
+                <RadioButton
+                    android:id="@+id/ingredient_diarrhea_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ingredient_diarrhea" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/ingredient_comment_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ingredient_comment_title"
+                app:layout_constraintBottom_toTopOf="@id/ingredient_comment_edit"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ingredient_allergy_radiogroup" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ingredient_comment_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={viewModel.food.comment}"
+                app:layout_constraintBottom_toTopOf="@id/ingredient_save_btn"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ingredient_comment_text" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/ingredient_save_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{view -> viewModel.saveIngredients()}"
+                android:text="@string/save"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ingredient_comment_edit" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

@@ -18,10 +18,95 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.viewpager2.widget.ViewPager2
+        <LinearLayout
+            android:id="@+id/home_week_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="7"
+            app:layout_constraintBottom_toTopOf="@id/home_calendar_pager"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_row_calendar_weekend"
+                android:gravity="center"
+                android:paddingVertical="5dp"
+                android:text="@string/sun" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_row_calendar_weekend"
+                android:gravity="center"
+                android:paddingVertical="5dp"
+                android:text="@string/mon" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_row_calendar_weekend"
+                android:gravity="center"
+                android:paddingVertical="5dp"
+                android:text="@string/thu" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_row_calendar_weekend"
+                android:gravity="center"
+                android:paddingVertical="5dp"
+                android:text="@string/wed" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_row_calendar_weekend"
+                android:gravity="center"
+                android:paddingVertical="5dp"
+                android:text="@string/thu" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_row_calendar_weekend"
+                android:gravity="center"
+                android:paddingVertical="5dp"
+                android:text="@string/fri" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_row_calendar_weekend"
+                android:gravity="center"
+                android:paddingVertical="5dp"
+                android:text="@string/sat" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/home_calendar_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:bind_page="@{viewModel.months}" />
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/home_week_layout"
+            app:layout_constraintVertical_weight="1" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
