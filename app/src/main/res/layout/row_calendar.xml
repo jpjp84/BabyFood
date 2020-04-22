@@ -14,9 +14,6 @@
         <variable
             name="viewModel"
             type="com.jp.babyfood.ui.home.HomeViewModel" />
-        <variable
-            name="viewModel2"
-            type="com.jp.babyfood.ui.calendarpage.CalendarPageViewModel" />
     </data>
 
     <LinearLayout

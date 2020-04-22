@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.databinding.RowCalendarBinding
-import com.jp.babyfood.util.LogUtil
 
 class CalendarAdapter(private val viewModel: HomeViewModel) :
     ListAdapter<Day, CalendarAdapter.CalendarViewHolder>(DayDiffCallback()) {

@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jp.babyfood.data.entity.Ingredient
 import com.jp.babyfood.databinding.RowIngredientAddBinding
 import com.jp.babyfood.databinding.RowIngredientBinding
-import com.jp.babyfood.util.LogUtil
 import com.jp.babyfood.util.LogUtil.LOGI
 
 class IngredientAdapter(val viewModel: CalendarDetailViewModel) :
@@ -89,12 +88,12 @@ class IngredientAdapter(val viewModel: CalendarDetailViewModel) :
 
 class IngredientDiffCallback : DiffUtil.ItemCallback<Ingredient>() {
     override fun areItemsTheSame(oldItem: Ingredient, newItem: Ingredient): Boolean {
-        LogUtil.LOGI("BF_TAG", "areItemsTheSame : ${oldItem.name}, ${newItem.name}")
+        LOGI("BF_TAG", "areItemsTheSame : ${oldItem.name}, ${newItem.name}")
         return oldItem.name == newItem.name
     }
 
     override fun areContentsTheSame(oldItem: Ingredient, newItem: Ingredient): Boolean {
-        LogUtil.LOGI("BF_TAG", "areContentsTheSame : $oldItem, $newItem")
+        LOGI("BF_TAG", "areContentsTheSame : $oldItem, $newItem")
         return oldItem == newItem
     }
 }

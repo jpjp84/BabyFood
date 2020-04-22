@@ -49,7 +49,7 @@ object CalendarUtil {
         val calendar = Calendar.getInstance()
         calendar.set(year, month, day)
 
-        calendar.add(Calendar.DAY_OF_MONTH, Calendar.SUNDAY - calendar.get(Calendar.DAY_OF_WEEK));
+        calendar.add(Calendar.DAY_OF_MONTH, Calendar.SUNDAY - calendar.get(Calendar.DAY_OF_WEEK))
 
         val weeks = mutableListOf(Day(calendar.timeInMillis, ""))
         MutableList(6) {

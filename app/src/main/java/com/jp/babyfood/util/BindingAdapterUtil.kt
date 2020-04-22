@@ -7,9 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.data.entity.Ingredient
 import com.jp.babyfood.ui.calendardetail.IngredientAdapter
-import com.jp.babyfood.ui.calendarpage.CalendarAdapter
+import com.jp.babyfood.ui.home.CalendarAdapter
 import com.jp.babyfood.ui.home.HomeCalendarPageAdapter
-import com.jp.babyfood.ui.weekcalendar.WeekCalendarAdapter
 import java.time.YearMonth
 
 
@@ -22,10 +21,6 @@ fun bindPage(recyclerView: RecyclerView, months: List<YearMonth>?) {
 fun bindItems(recyclerView: RecyclerView, days: List<Day>?) {
     if (recyclerView.adapter is CalendarAdapter) {
         (recyclerView.adapter as CalendarAdapter?)?.submitList(days!!)
-    }
-
-    if (recyclerView.adapter is WeekCalendarAdapter) {
-        (recyclerView.adapter as WeekCalendarAdapter?)?.submitList(days!!)
     }
 }
 

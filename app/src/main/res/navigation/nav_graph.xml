@@ -30,25 +30,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/calendarPageFragment"
-        android:name="com.jp.babyfood.ui.calendarpage.CalendarPageFragment"
-        android:label="Baby Food" >
-
-        <action
-            android:id="@+id/action_calendarPageFragment_to_weekCalendarFragment"
-            app:destination="@id/weekCalendarFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/weekCalendarFragment"
-        android:name="com.jp.babyfood.ui.weekcalendar.WeekCalendarFragment"
-        android:label="Week" >
-        <action
-            android:id="@+id/action_weekCalendarFragment_to_calendarDetailFragment"
-            app:destination="@id/calendarDetailFragment" />
-    </fragment>
-
-    <fragment
         android:id="@+id/historyFragment"
         android:name="com.jp.babyfood.ui.history.HistoryFragment"
         android:label="History" />

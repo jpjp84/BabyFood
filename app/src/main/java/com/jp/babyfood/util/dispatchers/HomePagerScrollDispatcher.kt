@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class HomePagerScrollDispatcher {
 
-    var scrolledPosition = -1
+    private var scrolledPosition = -1
 
     fun saveScrollPosition(scrolledPosition: Int) {
         this.scrolledPosition = scrolledPosition
