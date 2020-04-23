@@ -2,7 +2,6 @@ package com.jp.babyfood.ui.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -31,8 +30,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
         setCalendarPager()
         setNavigation()
-
-        viewModel.initMonth()
     }
 
     private fun setCalendarPager() {
@@ -57,7 +54,9 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
 
-                    scrollDispatcher.onScrollStateChanged(newState, viewModel)
+                    scrollDispatcher.onInsertedMonth(newState, viewModel) {
+                        viewBinding.homeCalendarPager.adapter?.notifyItemInserted(it)
+                    }
                 }
             })
             adapter = HomeCalendarPageAdapter(viewModel)
@@ -70,11 +69,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     private fun setNavigation() {
         viewModel.openCalendarDetailEvent.observe(viewLifecycleOwner, EventObserver {
             openCalendarDetail(it)
-        })
-
-        viewModel.months.observe(viewLifecycleOwner, Observer {
-            it?.let((adapter as HomeCalendarPageAdapter)::submitList)
-            viewBinding.homeCalendarPager.adapter?.notifyItemInserted(0)
         })
     }
 

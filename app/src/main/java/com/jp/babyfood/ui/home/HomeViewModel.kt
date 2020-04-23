@@ -16,7 +16,9 @@ class HomeViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : BaseViewModel(), HomePagerScrollDispatcher.OnFirstPage {
 
-    private val _months = MutableLiveData<MutableList<YearMonth>>(mutableListOf())
+    private val _months = MutableLiveData<MutableList<YearMonth>>().apply {
+        value = initMonth()
+    }
     val months: LiveData<MutableList<YearMonth>> = _months
 
     private val _yearMonth: MutableMap<String, List<Day>> = mutableMapOf()
@@ -24,22 +26,23 @@ class HomeViewModel @Inject constructor(
     private val _openCalendarDetailEvent = MutableLiveData<Event<Day>>()
     val openCalendarDetailEvent: LiveData<Event<Day>> = _openCalendarDetailEvent
 
-    fun initMonth() {
+    private fun initMonth(): MutableList<YearMonth> {
         val prevYearMonth = YearMonth.now().minusMonths(1)
         val currentYearMonth = YearMonth.now()
 
-        _months.value = mutableListOf(prevYearMonth, currentYearMonth)
+        return mutableListOf(prevYearMonth, currentYearMonth)
     }
 
-    override fun onUpdate() {
-        _months.value?.let { yearMonths ->
-            val prevYearMonth = yearMonths[0].minusMonths(1)
-            if (yearMonths.contains(prevYearMonth)) {
-                return
+    override fun updateMonths(): Int? {
+        return _months.value?.let {
+            val prevYearMonth = it[0].minusMonths(1)
+            if (it.contains(prevYearMonth)) {
+                return@let null
             }
 
-            yearMonths.add(0, prevYearMonth)
+            it.add(0, prevYearMonth)
             _months.notifyDataChange()
+            return@let 0
         }
     }
 
