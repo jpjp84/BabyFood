@@ -18,6 +18,7 @@ import javax.inject.Singleton
         MainModule::class,
         HomeModule::class,
         HistoryModule::class,
+        DayListModule::class,
         CalendarDetailModule::class
     ]
 )
