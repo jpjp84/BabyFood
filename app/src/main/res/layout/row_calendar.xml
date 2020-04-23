@@ -19,7 +19,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@{day.disable ? @drawable/bg_row_calendar_disable : @drawable/bg_row_calendar}"
+        android:background="@color/primaryLightColor"
         android:onClick="@{ (view) -> day.date == 0 ? void : viewModel.openCalendarDetail(day)}"
         android:orientation="vertical"
         android:paddingTop="5dp">
@@ -29,7 +29,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@{day.date == 0 ? `` : String.valueOf(day.getDateToClass())}" />
+            android:text="@{String.valueOf(day.getDateToClass())}"
+            android:textColor="@{day.disable ? @color/primaryDisableTextColor : @color/primaryTextColor}" />
 
         <TextView
             android:id="@+id/calendar_work"
