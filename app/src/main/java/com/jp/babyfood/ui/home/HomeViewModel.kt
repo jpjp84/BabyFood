@@ -1,6 +1,7 @@
 package com.jp.babyfood.ui.home
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.data.repository.FoodRepository
@@ -21,7 +22,13 @@ class HomeViewModel @Inject constructor(
     }
     val months: LiveData<MutableList<YearMonth>> = _months
 
-    private val _yearMonth: MutableMap<String, List<Day>> = mutableMapOf()
+    private val _yearMonth = MutableLiveData<MutableMap<YearMonth, List<Day>>>().apply {
+        value = mutableMapOf()
+    }
+    val yearMonth: LiveData<MutableMap<YearMonth, List<Day>>> = _yearMonth
+
+    private val _addMonth = MediatorLiveData<Boolean>()
+    val addMonth = _addMonth
 
     private val _openCalendarDetailEvent = MutableLiveData<Event<Day>>()
     val openCalendarDetailEvent: LiveData<Event<Day>> = _openCalendarDetailEvent
@@ -31,6 +38,25 @@ class HomeViewModel @Inject constructor(
         val currentYearMonth = YearMonth.now()
 
         return mutableListOf(prevYearMonth, currentYearMonth)
+    }
+
+    init {
+        addMonth.addSource(months) {
+            addMonth.value = true
+            val addedYearMonth: MutableList<YearMonth> =
+                it.minus(yearMonth.value?.keys!!) as MutableList<YearMonth>
+
+            addedYearMonth.toList().map { newYearMonth ->
+                val new =
+                    _yearMonth.value?.get(newYearMonth) ?: CalendarUtil.createYearMonth(
+                        newYearMonth.year,
+                        newYearMonth.monthValue
+                    )
+                _yearMonth.value?.put(newYearMonth, new)
+            }
+
+            _yearMonth.notifyDataChange()
+        }
     }
 
     override fun updateMonths(): Int? {
@@ -45,12 +71,6 @@ class HomeViewModel @Inject constructor(
             return@let 0
         }
     }
-
-    fun getDaysByYearMonth(yearMonth: YearMonth): List<Day>? =
-        _yearMonth[yearMonth.toString()] ?: CalendarUtil.createYearMonth(
-            yearMonth.year,
-            yearMonth.monthValue
-        )
 
     fun openCalendarDetail(day: Day) {
         _openCalendarDetailEvent.value = Event(day)

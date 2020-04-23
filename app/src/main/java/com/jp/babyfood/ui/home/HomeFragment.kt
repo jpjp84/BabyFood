@@ -2,6 +2,7 @@ package com.jp.babyfood.ui.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +11,7 @@ import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.databinding.FragmentHomeBinding
 import com.jp.babyfood.ui.base.BaseFragment
 import com.jp.babyfood.util.EventObserver
+import com.jp.babyfood.util.LogUtil
 import com.jp.babyfood.util.dispatchers.HomePagerScrollDispatcher
 import javax.inject.Inject
 
@@ -70,10 +72,16 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         viewModel.openCalendarDetailEvent.observe(viewLifecycleOwner, EventObserver {
             openCalendarDetail(it)
         })
+
+        viewModel.addMonth.observe(viewLifecycleOwner, Observer {
+            // Need to observe the pinnedSessions otherwise it's considered as inactive
+            LogUtil.LOGI("BF_TAG", "observe")
+//            viewBinding.homeCalendarPager.adapter?.notifyItemInserted(0)
+        })
     }
 
     private fun openCalendarDetail(item: Day) {
-        val action = HomeFragmentDirections.actionCalendarPageFragmentToCalendarDetailFragment(item)
+        val action = HomeFragmentDirections.actionHomeFragmentToDayListFragment(item)
         findNavController().navigate(action)
     }
 }

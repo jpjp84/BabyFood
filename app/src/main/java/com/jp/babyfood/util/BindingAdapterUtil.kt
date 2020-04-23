@@ -19,8 +19,8 @@ fun bindPage(recyclerView: RecyclerView, months: List<YearMonth>?) {
 
 @BindingAdapter("bind_items")
 fun bindItems(recyclerView: RecyclerView, days: List<Day>?) {
-    if (recyclerView.adapter is CalendarAdapter) {
-        (recyclerView.adapter as CalendarAdapter?)?.submitList(days!!)
+    days?.let {
+        (recyclerView.adapter as CalendarAdapter?)?.submitList(it)
     }
 }
 

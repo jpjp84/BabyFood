@@ -36,7 +36,7 @@
             android:id="@+id/calendar_work"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{day.work}" />
+            android:text="Food title" />
 
     </LinearLayout>
 </layout>

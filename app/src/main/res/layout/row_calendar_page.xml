@@ -5,14 +5,20 @@
     <data>
 
         <variable
+            name="currentMonth"
+            type="java.time.YearMonth" />
+
+        <variable
             name="viewModel"
             type="com.jp.babyfood.ui.home.HomeViewModel" />
     </data>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendar_page_view"
+        android:background="@color/primaryLightColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:bind_items="@{viewModel.yearMonth[currentMonth]}"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="7" />
 </layout>
