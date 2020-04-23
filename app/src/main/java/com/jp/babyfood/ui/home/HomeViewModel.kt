@@ -3,7 +3,7 @@ package com.jp.babyfood.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.jp.babyfood.data.entity.Day
-import com.jp.babyfood.data.repository.UserRepository
+import com.jp.babyfood.data.repository.FoodRepository
 import com.jp.babyfood.ui.base.BaseViewModel
 import com.jp.babyfood.util.CalendarUtil
 import com.jp.babyfood.util.Event
@@ -13,7 +13,7 @@ import java.time.YearMonth
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val foodRepository: FoodRepository
 ) : BaseViewModel(), HomePagerScrollDispatcher.OnFirstPage {
 
     private val _months = MutableLiveData<MutableList<YearMonth>>().apply {

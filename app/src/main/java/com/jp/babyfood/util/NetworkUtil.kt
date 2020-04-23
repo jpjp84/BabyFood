@@ -1,5 +1,6 @@
 package com.jp.babyfood.util
 
+import com.jp.babyfood.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -15,7 +16,7 @@ object NetworkUtil {
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://android-boilerplate-925b1.firebaseio.com/")
+            .baseUrl("${BuildConfig.URL}/test/")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(client)

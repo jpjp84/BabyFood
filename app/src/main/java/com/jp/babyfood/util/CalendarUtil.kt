@@ -22,7 +22,7 @@ object CalendarUtil {
         return List(42) {
             calendar.add(Calendar.DATE, if (it == 0) 0 else 1)
             val isInMonth = month - 1 == calendar[Calendar.MONTH] && year == calendar[Calendar.YEAR]
-            Day(calendar.timeInMillis, "", !isInMonth)
+            Day(calendar.timeInMillis, mutableListOf(), !isInMonth)
         }
     }
 }

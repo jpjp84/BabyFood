@@ -20,8 +20,13 @@ android {
         multiDexEnabled true
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            buildConfigField "String", "URL", "\"https://5f0aa633-b44c-4db7-a9a1-6d63c6ae6eda.mock.pstmn.io\""
+        }
         release {
             minifyEnabled false
+            buildConfigField "String", "URL", "\"https://5f0aa633-b44c-4db7-a9a1-6d63c6ae6eda.mock.pstmn.io\""
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
