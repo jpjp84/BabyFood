@@ -10,19 +10,15 @@ class HomePagerScrollDispatcher {
         this.scrolledPosition = scrolledPosition
     }
 
-    fun onInsertedMonth(
-        newState: Int,
-        viewModel: OnFirstPage,
-        callback: (insertPosition: Int) -> Unit
-    ) {
+    fun onScrollStateChanged(newState: Int, viewModel: OnFirstPage) {
         if (newState != RecyclerView.SCROLL_STATE_IDLE || scrolledPosition != 0) {
             return
         }
 
-        viewModel.updateMonths()?.let { callback(it) }
+        viewModel.updateMonths()
     }
 
     interface OnFirstPage {
-        fun updateMonths(): Int?
+        fun updateMonths()
     }
 }

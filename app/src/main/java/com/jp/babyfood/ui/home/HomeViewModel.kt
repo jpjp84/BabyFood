@@ -80,16 +80,15 @@ class HomeViewModel @Inject constructor(
             }
         }.flowOn(Dispatchers.Default)
 
-    override fun updateMonths(): Int? {
-        return _months.value?.let {
+    override fun updateMonths() {
+        _months.value?.let {
             val prevYearMonth = it[0].minusMonths(1)
             if (it.contains(prevYearMonth)) {
-                return@let null
+                return
             }
 
             it.add(0, prevYearMonth)
             _months.notifyDataChange()
-            return@let 0
         }
     }
 

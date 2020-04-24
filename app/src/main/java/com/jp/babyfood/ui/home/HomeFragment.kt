@@ -11,7 +11,6 @@ import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.databinding.FragmentHomeBinding
 import com.jp.babyfood.ui.base.BaseFragment
 import com.jp.babyfood.util.EventObserver
-import com.jp.babyfood.util.LogUtil
 import com.jp.babyfood.util.dispatchers.HomePagerScrollDispatcher
 import javax.inject.Inject
 
@@ -56,9 +55,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
 
-                    scrollDispatcher.onInsertedMonth(newState, viewModel) {
-                        viewBinding.homeCalendarPager.adapter?.notifyItemInserted(it)
-                    }
+                    scrollDispatcher.onScrollStateChanged(newState, viewModel)
                 }
             })
             adapter = HomeCalendarPageAdapter(viewModel)
@@ -73,10 +70,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             openCalendarDetail(it)
         })
 
-        viewModel.addMonth.observe(viewLifecycleOwner, Observer {
-            // Need to observe the pinnedSessions otherwise it's considered as inactive
-            LogUtil.LOGI("BF_TAG", "observe")
-//            viewBinding.homeCalendarPager.adapter?.notifyItemInserted(0)
+        viewModel.onChangePageItem.observe(viewLifecycleOwner, Observer {
+            viewBinding.homeCalendarPager.adapter?.notifyItemInserted(it)
         })
     }
 
