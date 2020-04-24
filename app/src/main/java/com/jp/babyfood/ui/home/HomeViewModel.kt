@@ -1,9 +1,9 @@
 package com.jp.babyfood.ui.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.data.repository.FoodRepository
 import com.jp.babyfood.ui.base.BaseViewModel
@@ -11,13 +11,17 @@ import com.jp.babyfood.util.CalendarUtil
 import com.jp.babyfood.util.Event
 import com.jp.babyfood.util.dispatchers.HomePagerScrollDispatcher
 import com.jp.babyfood.util.notifyDataChange
-import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import java.time.YearMonth
 import javax.inject.Inject
 
+@OptIn(InternalCoroutinesApi::class)
 class HomeViewModel @Inject constructor(
     private val foodRepository: FoodRepository
 ) : BaseViewModel(), HomePagerScrollDispatcher.OnFirstPage {
@@ -43,22 +47,20 @@ class HomeViewModel @Inject constructor(
 
     init {
         _onChangePageItem.addSource(months) {
-            createNewMonth(it, yearMonth.value!!.isEmpty())
-                .subscribeOn(Schedulers.io())
-                .filter { index -> index >= 0 }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { index ->
-                        _onChangePageItem.value = index
-                    },
-                    { t: Throwable? -> Log.e("BF_TAG", "Exception : ", t) },
-                    { _yearMonth.notifyDataChange() }
-                )
+            viewModelScope.launch {
+                createNewMonth(it, yearMonth.value!!.isEmpty()).collect(object :
+                    FlowCollector<Int> {
+                    override suspend fun emit(value: Int) {
+                        _onChangePageItem.value = value
+                        _yearMonth.notifyDataChange()
+                    }
+                })
+            }
         }
     }
 
-    private fun createNewMonth(newMonths: MutableList<YearMonth>, isInit: Boolean): Flowable<Int> {
-        return Flowable.defer {
+    private fun createNewMonth(newMonths: MutableList<YearMonth>, isInit: Boolean): Flow<Int> =
+        flow {
             yearMonth.value?.let {
                 val addedYearMonths: MutableList<YearMonth> =
                     newMonths.minus(it.keys) as MutableList<YearMonth>
@@ -73,15 +75,10 @@ class HomeViewModel @Inject constructor(
                             addedYearMonth.monthValue
                         )
                     )
-
-                    if (!isInit) return@defer Flowable.just(0)
+                    if (!isInit) emit(0)
                 }
             }
-
-            Flowable.just(-1)
-        }
-    }
-
+        }.flowOn(Dispatchers.Default)
 
     override fun updateMonths(): Int? {
         return _months.value?.let {
