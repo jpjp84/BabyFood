@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primaryLightColor"
-        android:onClick="@{ (view) -> day.date == 0 ? void : viewModel.openCalendarDetail(day)}"
+        android:onClick="@{ (view) -> day.date == null ? void : viewModel.openCalendarDetail(day)}"
         android:orientation="vertical"
         android:paddingTop="5dp">
 

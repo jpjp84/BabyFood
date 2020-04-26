@@ -6,6 +6,7 @@ import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.data.repository.UserRepository
 import com.jp.babyfood.ui.base.BaseViewModel
 import com.jp.babyfood.util.Event
+import com.jp.babyfood.util.LogUtil.LOGI
 import javax.inject.Inject
 
 class DayListViewModel @Inject constructor(
@@ -16,7 +17,7 @@ class DayListViewModel @Inject constructor(
     val openCalendarDetailEvent: LiveData<Event<Day>> = _openCalendarDetailEvent
 
     fun initDayLists(day: Day) {
-
+        LOGI("BF_TAG", "day : $day")
     }
 
     fun openCalendarDetail() {
