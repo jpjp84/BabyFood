@@ -11,17 +11,14 @@ import com.jp.babyfood.data.repository.FoodRepository
 import com.jp.babyfood.ui.base.BaseViewModel
 import com.jp.babyfood.util.CalendarUtil
 import com.jp.babyfood.util.Event
-import com.jp.babyfood.util.LogUtil.LOGI
 import com.jp.babyfood.util.dispatchers.HomePagerScrollDispatcher
 import com.jp.babyfood.util.merge
 import com.jp.babyfood.util.notifyDataChange
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.time.YearMonth
 import javax.inject.Inject
 
-@OptIn(InternalCoroutinesApi::class)
 class HomeViewModel @Inject constructor(
     private val foodRepository: FoodRepository
 ) : BaseViewModel(), HomePagerScrollDispatcher.OnFirstPage {
@@ -34,67 +31,66 @@ class HomeViewModel @Inject constructor(
     }
     val yearMonths: LiveData<MutableList<YearMonth>> = _yearMonths
 
-    private val _daysMap = MutableLiveData<MutableMap<YearMonth, Days>>(mutableMapOf())
-    val daysMap: LiveData<MutableMap<YearMonth, Days>> = _daysMap
+    private val _daysByYearMonth = MutableLiveData<MutableMap<YearMonth, Days>>(mutableMapOf())
+    val daysByYearMonth: LiveData<MutableMap<YearMonth, Days>> = _daysByYearMonth
 
-    private val _onChangePageItem = MediatorLiveData<Int>()
-    val onChangePageItem = _onChangePageItem
+    private val _onLoadedDays = MediatorLiveData<Pair<Int, Days>>()
+    val onLoadedDays = _onLoadedDays
 
     private val _openCalendarDetailEvent = MutableLiveData<Event<Day>>()
     val openCalendarDetailEvent: LiveData<Event<Day>> = _openCalendarDetailEvent
 
     init {
-        _onChangePageItem.addSource(yearMonths) { loadDays(it) }
-    }
-
-    private fun loadDays(newMonths: MutableList<YearMonth>) = viewModelScope.launch {
-        val isInit = _daysMap.value!!.isEmpty()
-        val createMonthJob = async { createDefaultDays(newMonths) }
-
-        createMonthJob.await()?.let { newYearMonths ->
-            if (!isInit) {
-                _onChangePageItem.value = 0
-                _daysMap.notifyDataChange()
-            }
-
-            newYearMonths.map { updateDays(it) }
+        _onLoadedDays.addSource(yearMonths) {
+            loadDays(getDefaultMonths())
         }
     }
 
-    private fun createDefaultDays(newMonths: MutableList<YearMonth>): MutableList<YearMonth>? {
-        return daysMap.value?.let {
-            val addedYearMonths: MutableList<YearMonth> =
-                newMonths.minus(it.keys) as MutableList<YearMonth>
+    private fun loadDays(getDefaultMonths: () -> MutableList<YearMonth>?) = viewModelScope.launch {
+        val defaultMonthsJob = async { getDefaultMonths() }
 
-            addedYearMonths.map { addedYearMonth ->
-                if (it.containsKey(addedYearMonth)) return@map
+        defaultMonthsJob.await()?.apply { map { getDaysByYearMonth(it) } }
+    }
 
-                _daysMap.value?.put(
-                    addedYearMonth,
-                    CalendarUtil.createYearMonth(
-                        addedYearMonth.year,
-                        addedYearMonth.monthValue
+    private fun getDefaultMonths(): () -> MutableList<YearMonth>? {
+        return {
+            daysByYearMonth.value?.let {
+                val addedYearMonths: MutableList<YearMonth> =
+                    yearMonths.value?.minus(it.keys) as MutableList<YearMonth>
+
+                addedYearMonths.map { addedYearMonth ->
+                    if (it.containsKey(addedYearMonth)) return@map
+
+                    _daysByYearMonth.value?.put(
+                        addedYearMonth,
+                        CalendarUtil.createYearMonth(
+                            addedYearMonth.year,
+                            addedYearMonth.monthValue
+                        )
                     )
-                )
+                }
+                return@let addedYearMonths
             }
-            return@let addedYearMonths
         }
     }
 
-    private fun updateDays(yearMonth: YearMonth) {
-        LOGI("BF_TAG", "Success : $yearMonth")
+    private fun getDaysByYearMonth(yearMonth: YearMonth) {
         addDisposable(
             foodRepository.getDailyFoods(yearMonth, true)
                 .subscribe(
-                    { replaceDays(yearMonth, it) },
+                    { replaceNewDays(yearMonth, it) },
                     { t -> Log.e("BF_TAG", "Throwable : ", t) }
                 )
         )
     }
 
-    private fun replaceDays(yearMonth: YearMonth, updatedDays: Days) {
-        val currentMonths = _daysMap.value?.get(yearMonth)
-        val result = currentMonths?.merge(updatedDays)
+    private fun replaceNewDays(yearMonth: YearMonth, updatedDays: Days) {
+        val currentMonths = _daysByYearMonth.value?.get(yearMonth)
+        currentMonths?.merge(updatedDays)?.let {
+            _daysByYearMonth.value?.set(yearMonth, it)
+            _daysByYearMonth.notifyDataChange()
+            _onLoadedDays.value = Pair(yearMonths.value!!.indexOf(yearMonth), it)
+        }
     }
 
     override fun updateMonths() {

@@ -29,6 +29,11 @@ class HomeCalendarPageAdapter(private val viewModel: HomeViewModel) :
             binding.currentMonth = yearMonth
             adapter = CalendarAdapter(viewModel)
             binding.calendarPageView.adapter = adapter
+            binding.executePendingBindings()
+        }
+
+        fun getChildAdapter(): CalendarAdapter {
+            return binding.calendarPageView.adapter as CalendarAdapter
         }
 
         companion object {

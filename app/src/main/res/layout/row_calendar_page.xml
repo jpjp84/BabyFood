@@ -18,7 +18,7 @@
         android:background="@color/primaryLightColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:bind_items="@{viewModel.daysMap[currentMonth]}"
+        app:bind_items="@{viewModel.daysByYearMonth[currentMonth]}"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="7" />
 </layout>

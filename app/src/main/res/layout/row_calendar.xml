@@ -34,9 +34,10 @@
 
         <TextView
             android:id="@+id/calendar_work"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Food title" />
+            android:gravity="center"
+            android:text="@{day.foods.size() > 0 ? day.foods.get(0).title: ``}" />
 
     </LinearLayout>
 </layout>

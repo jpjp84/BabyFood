@@ -3,7 +3,6 @@ package com.jp.babyfood.util
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.data.entity.Days
 
 fun <T> MutableLiveData<T>.notifyDataChange() {
@@ -44,10 +43,12 @@ fun <A, B, C, Result> LiveData<A>.combine(
     return result
 }
 
-fun Days.merge(other: Days): List<Day> {
+fun Days.merge(other: Days): Days {
     return this.map { value ->
         try {
-            return@map other.first { value.date == it.date }
+            val matchedOther = other.first { value.date == it.date }
+            matchedOther.disable = value.disable
+            return@map matchedOther
         } catch (e: NoSuchElementException) {
         }
         return@map value
