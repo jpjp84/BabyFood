@@ -9,15 +9,13 @@ import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.data.entity.Days
 import com.jp.babyfood.data.repository.FoodRepository
 import com.jp.babyfood.ui.base.BaseViewModel
-import com.jp.babyfood.util.CalendarUtil
-import com.jp.babyfood.util.Event
+import com.jp.babyfood.util.*
 import com.jp.babyfood.util.dispatchers.HomePagerScrollDispatcher
-import com.jp.babyfood.util.merge
-import com.jp.babyfood.util.notifyDataChange
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.time.YearMonth
 import javax.inject.Inject
+
 
 class HomeViewModel @Inject constructor(
     private val foodRepository: FoodRepository
@@ -34,45 +32,35 @@ class HomeViewModel @Inject constructor(
     private val _daysByYearMonth = MutableLiveData<MutableMap<YearMonth, Days>>(mutableMapOf())
     val daysByYearMonth: LiveData<MutableMap<YearMonth, Days>> = _daysByYearMonth
 
-    private val _onLoadedDays = MediatorLiveData<Pair<Int, Days>>()
-    val onLoadedDays = _onLoadedDays
+    private val _onUpdateSavedDays = MediatorLiveData<Pair<Int, Days>>()
+    val onUpdateSavedDays = _onUpdateSavedDays
 
     private val _openCalendarDetailEvent = MutableLiveData<Event<Day>>()
     val openCalendarDetailEvent: LiveData<Event<Day>> = _openCalendarDetailEvent
 
     init {
-        _onLoadedDays.addSource(yearMonths) {
-            loadDays(getDefaultMonths())
+        _onUpdateSavedDays.addSource(yearMonths) {
+            loadDays(CalendarUtil.createDefaultDays(it))
         }
     }
 
-    private fun loadDays(getDefaultMonths: () -> MutableList<YearMonth>?) = viewModelScope.launch {
-        val defaultMonthsJob = async { getDefaultMonths() }
-
-        defaultMonthsJob.await()?.apply { map { getDaysByYearMonth(it) } }
-    }
-
-    private fun getDefaultMonths(): () -> MutableList<YearMonth>? {
-        return {
-            daysByYearMonth.value?.let {
-                val addedYearMonths: MutableList<YearMonth> =
-                    yearMonths.value?.minus(it.keys) as MutableList<YearMonth>
-
-                addedYearMonths.map { addedYearMonth ->
-                    if (it.containsKey(addedYearMonth)) return@map
-
-                    _daysByYearMonth.value?.put(
-                        addedYearMonth,
-                        CalendarUtil.createYearMonth(
-                            addedYearMonth.year,
-                            addedYearMonth.monthValue
-                        )
-                    )
-                }
-                return@let addedYearMonths
+    override fun updateMonths() {
+        _yearMonths.value?.let {
+            val prevYearMonth = it[0].minusMonths(1)
+            if (it.contains(prevYearMonth)) {
+                return
             }
+
+            it.add(0, prevYearMonth)
+            _yearMonths.notifyDataChange()
         }
     }
+
+    private fun loadDays(getNewMonths: (DaysByYearMonths) -> YearMonths?) =
+        viewModelScope.launch {
+            val getNewMonthsJob = async { daysByYearMonth.value?.let { getNewMonths(it) } }
+            getNewMonthsJob.await()?.apply { map { getDaysByYearMonth(it) } }
+        }
 
     private fun getDaysByYearMonth(yearMonth: YearMonth) {
         addDisposable(
@@ -88,20 +76,7 @@ class HomeViewModel @Inject constructor(
         val currentMonths = _daysByYearMonth.value?.get(yearMonth)
         currentMonths?.merge(updatedDays)?.let {
             _daysByYearMonth.value?.set(yearMonth, it)
-            _daysByYearMonth.notifyDataChange()
-            _onLoadedDays.value = Pair(yearMonths.value!!.indexOf(yearMonth), it)
-        }
-    }
-
-    override fun updateMonths() {
-        _yearMonths.value?.let {
-            val prevYearMonth = it[0].minusMonths(1)
-            if (it.contains(prevYearMonth)) {
-                return
-            }
-
-            it.add(0, prevYearMonth)
-            _yearMonths.notifyDataChange()
+            _onUpdateSavedDays.value = Pair(yearMonths.value!!.indexOf(yearMonth), it)
         }
     }
 

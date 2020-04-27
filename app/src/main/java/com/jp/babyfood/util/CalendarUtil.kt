@@ -2,8 +2,12 @@ package com.jp.babyfood.util
 
 import android.icu.util.Calendar
 import com.jp.babyfood.data.entity.Day
+import com.jp.babyfood.data.entity.Days
 import java.time.YearMonth
 
+
+typealias YearMonths = MutableList<YearMonth>
+typealias DaysByYearMonths = MutableMap<YearMonth, Days>
 
 object CalendarUtil {
 
@@ -31,4 +35,21 @@ object CalendarUtil {
             Day(key, mutableListOf(), !isInMonth)
         }
     }
+
+    val createDefaultDays: (YearMonths) -> (DaysByYearMonths) -> YearMonths? =
+        { yearMonths ->
+            { daysByYearMonth ->
+                val addedMonths = yearMonths.minus(daysByYearMonth.keys) as MutableList<YearMonth>
+                addedMonths.apply {
+                    map { addedYearMonth ->
+                        if (daysByYearMonth.containsKey(addedYearMonth)) return@map
+
+                        daysByYearMonth[addedYearMonth] = createYearMonth(
+                            addedYearMonth.year,
+                            addedYearMonth.monthValue
+                        )
+                    }
+                }
+            }
+        }
 }

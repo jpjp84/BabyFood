@@ -75,7 +75,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             (viewBinding.homeCalendarPager.adapter as HomeCalendarPageAdapter).notifyItemInserted(0)
         })
 
-        viewModel.onLoadedDays.observe(viewLifecycleOwner, Observer {
+        viewModel.onUpdateSavedDays.observe(viewLifecycleOwner, Observer {
             val viewHolder =
                 viewBinding.homeCalendarPager.findViewHolderForAdapterPosition(it.first)
 
