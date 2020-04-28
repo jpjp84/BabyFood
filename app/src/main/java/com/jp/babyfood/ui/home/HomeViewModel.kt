@@ -21,6 +21,10 @@ class HomeViewModel @Inject constructor(
     private val foodRepository: FoodRepository
 ) : BaseViewModel(), HomePagerScrollDispatcher.OnFirstPage {
 
+    companion object {
+        const val INSERTED_POSITION = 0
+    }
+
     private val _yearMonths = MutableLiveData<MutableList<YearMonth>>().apply {
         val prevYearMonth = YearMonth.now().minusMonths(1)
         val currentYearMonth = YearMonth.now()
@@ -32,8 +36,11 @@ class HomeViewModel @Inject constructor(
     private val _daysByYearMonth = MutableLiveData<MutableMap<YearMonth, Days>>(mutableMapOf())
     val daysByYearMonth: LiveData<MutableMap<YearMonth, Days>> = _daysByYearMonth
 
-    private val _onUpdateSavedDays = MediatorLiveData<Pair<Int, Days>>()
+    private val _onUpdateSavedDays = MediatorLiveData<Event<Pair<Int, Days>>>()
     val onUpdateSavedDays = _onUpdateSavedDays
+
+    private val _insertedNewPage = MutableLiveData<Event<Int>>()
+    val insertedNewPage = _insertedNewPage
 
     private val _openCalendarDetailEvent = MutableLiveData<Event<Day>>()
     val openCalendarDetailEvent: LiveData<Event<Day>> = _openCalendarDetailEvent
@@ -51,7 +58,8 @@ class HomeViewModel @Inject constructor(
                 return
             }
 
-            it.add(0, prevYearMonth)
+            it.add(INSERTED_POSITION, prevYearMonth)
+            _insertedNewPage.value = Event(INSERTED_POSITION)
             _yearMonths.notifyDataChange()
         }
     }
@@ -76,7 +84,7 @@ class HomeViewModel @Inject constructor(
         val currentMonths = _daysByYearMonth.value?.get(yearMonth)
         currentMonths?.merge(updatedDays)?.let {
             _daysByYearMonth.value?.set(yearMonth, it)
-            _onUpdateSavedDays.value = Pair(yearMonths.value!!.indexOf(yearMonth), it)
+            _onUpdateSavedDays.value = Event(Pair(yearMonths.value!!.indexOf(yearMonth), it))
         }
     }
 
