@@ -1,0 +1,360 @@
+{
+	"info": {
+		"_postman_id": "6caca770-d8fa-4f74-8a4b-0f5cd93b5d98",
+		"name": "BabyFood Mock Server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "userId/days",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/{{userId}}/days?yearMonth=2020-02",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{userId}}",
+						"days"
+					],
+					"query": [
+						{
+							"key": "yearMonth",
+							"value": "2020-02"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "userId/days?date=2020-02",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/{{userId}}/days?yearMonth=2020-02",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{userId}}",
+								"days"
+							],
+							"query": [
+								{
+									"key": "yearMonth",
+									"value": "2020-02"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"result\": [\n        {\n            \"date\": 20200205,\n            \"foods\": [\n                {\n                \t\"title\": \"이유식1\",\n                \t\"id\": \"test1\",\n                \t\"color\": \"#332332\"\n                },\n                {\n                \t\"title\": \"이유식2\",\n                \t\"id\": \"test2\",\n                \t\"color\": \"#f2f2f2\"\n                }\n            ]\n        }\n    ]\n}"
+				},
+				{
+					"name": "userId/days?date=2020-04",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/{{userId}}/days?yearMonth=2020-04",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{userId}}",
+								"days"
+							],
+							"query": [
+								{
+									"key": "yearMonth",
+									"value": "2020-04"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 23 Apr 2020 03:15:30 GMT"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"0-2jmj7l5rSw0yVb/vlWAYkK/YBwk\""
+						},
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "120"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "119"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1587609698"
+						},
+						{
+							"key": "x-srv-span",
+							"value": "v=1;s=be9073a196d73c50"
+						},
+						{
+							"key": "x-srv-trace",
+							"value": "v=1;t=304c9382fea74afa"
+						},
+						{
+							"key": "Content-Length",
+							"value": "134"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"result\": [\n        {\n            \"date\": 20200405,\n            \"foods\": [\n                {\n                \t\"title\": \"이유식1\",\n                \t\"id\": \"test1\",\n                \t\"color\": \"#f8bbd0\"\n                },\n                {\n                \t\"title\": \"이유식2\",\n                \t\"id\": \"test2\",\n                \t\"color\": \"#f8bbd0\"\n                }\n            ]\n        },\n        {\n            \"date\": 20200406,\n            \"foods\": [\n                {\n                \t\"title\": \"이유식2\",\n                \t\"id\": \"test1\",\n                \t\"color\": \"#e1bee7\"\n                },\n                {\n                \t\"title\": \"이유식3\",\n                \t\"id\": \"test2\",\n                \t\"color\": \"#e1bee7\"\n                }\n            ]\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "userId/foods",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{userId}}/foods?id=test1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{userId}}",
+						"foods"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "test1"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "userId/foods?id=test1",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/{{userId}}/foods?id=test1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{userId}}",
+								"foods"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "test1"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 23 Apr 2020 03:06:21 GMT"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"96-S/5iQ2y1qqIInh5BwoPc+chvDJU\""
+						},
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "120"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "119"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1587611241"
+						},
+						{
+							"key": "x-srv-span",
+							"value": "v=1;s=37d12c3e3c455626"
+						},
+						{
+							"key": "x-srv-trace",
+							"value": "v=1;t=aea852a0db871e06"
+						},
+						{
+							"key": "Content-Length",
+							"value": "135"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"result\": {\n        \"title\": \"이유식1\",\n        \"ingredients\": [\n        \t{\n        \t\t\"name\":\"소고기\",\n        \t\t\"gram\": 50\n        \t},\n        \t{\n        \t\t\"name\":\"쌀\",\n        \t\t\"gram\": 100\n        \t}\n        ],\n        \"comment\": \"test1\"\n    }\n}"
+				},
+				{
+					"name": "userId/foods?id=test2",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/{{userId}}/foods?id=test2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"{{userId}}",
+								"foods"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "test2"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 23 Apr 2020 03:09:33 GMT"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"96-S/5iQ2y1qqIInh5BwoPc+chvDJU\""
+						},
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "120"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "119"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1587611241"
+						},
+						{
+							"key": "x-srv-span",
+							"value": "v=1;s=37d12c3e3c455626"
+						},
+						{
+							"key": "x-srv-trace",
+							"value": "v=1;t=aea852a0db871e06"
+						},
+						{
+							"key": "Content-Length",
+							"value": "152"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"result\": {\n        \"title\": \"이유식2\",\n        \"ingredients\": [\n            {\n                \"name\": \"오이\",\n                \"gram\": 50\n            },\n            {\n                \"name\": \"쌀\",\n                \"gram\": 100\n            }\n        ],\n        \"comment\": \"test2\"\n    }\n}"
+				}
+			]
+		}
+	],
+	"protocolProfileBehavior": {}
+}
