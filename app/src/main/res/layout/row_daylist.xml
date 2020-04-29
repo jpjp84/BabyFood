@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.content.Context" />
+
+        <import type="android.graphics.Color" />
+
+        <variable
+            name="food"
+            type="com.jp.babyfood.data.entity.Food" />
+
+        <variable
+            name="viewModel"
+            type="com.jp.babyfood.ui.daylist.DayListViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{ (view) -> viewModel.openCalendarDetail(food)}"
+        android:orientation="vertical"
+        android:padding="25dp"
+        app:backgroundColor="@{Color.parseColor(food.color)}"
+        app:backgroundDrawable="@{@drawable/bg_row_daylist}">
+
+        <TextView
+            android:id="@+id/calendar_day"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="@{food.title}"
+            android:textSize="25sp"
+            app:textColorByBgColor="@{food.color}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="소고기"
+            android:textSize="15sp"
+            app:textColorByBgColor="@{food.color}" />
+    </LinearLayout>
+</layout>

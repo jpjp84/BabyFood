@@ -10,7 +10,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class UserRemoteDataSource : UserDataSource {
+class UserRemoteDataSource: UserDataSource {
 
     override fun getUser(): Flowable<User> {
         return NetworkUtil.getAPI(UserAPI::class.java).getUser()

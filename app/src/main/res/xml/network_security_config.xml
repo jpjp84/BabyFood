@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">android-boilerplate-925b1.firebaseio.com</domain>
+        <domain includeSubdomains="true">5f0aa633-b44c-4db7-a9a1-6d63c6ae6eda.mock.pstmn.io</domain>
     </domain-config>
 </network-security-config>

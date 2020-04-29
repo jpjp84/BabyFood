@@ -2,30 +2,14 @@ package com.jp.babyfood.util
 
 import android.icu.util.Calendar
 import com.jp.babyfood.data.entity.Day
-import com.jp.babyfood.data.entity.Month
+import com.jp.babyfood.data.entity.Days
 import java.time.YearMonth
-import kotlin.collections.List
 
+
+typealias YearMonths = MutableList<YearMonth>
+typealias DaysByYearMonths = MutableMap<YearMonth, Days>
 
 object CalendarUtil {
-
-    fun createMonth(month: Month): Month {
-        val calendar: Calendar = Calendar.getInstance()
-        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 1)
-        val startWeek = calendar.get(Calendar.DAY_OF_WEEK)
-        val endDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-
-        val dayList = List(42) {
-            val date = it - startWeek + 2
-            if (date < 1 || date > endDayOfMonth) {
-                return@List Day(0, "")
-            }
-            Day(date.toLong(), "")
-        }
-
-        month.days.addAll(dayList)
-        return month
-    }
 
     fun createYearMonth(year: String, month: String): List<Day> {
         return createYearMonth(year.toInt(), month.toInt())
@@ -36,27 +20,36 @@ object CalendarUtil {
         month: Int = YearMonth.now().monthValue
     ): List<Day> {
         val calendar: Calendar = Calendar.getInstance()
-        calendar.set(year, month - 1, 1)
+        calendar.set(year, month - 1, 1, 0, 0, 0)
         calendar.add(Calendar.DAY_OF_MONTH, Calendar.SUNDAY - calendar.get(Calendar.DAY_OF_WEEK))
 
         return List(42) {
             calendar.add(Calendar.DATE, if (it == 0) 0 else 1)
-            Day(calendar.timeInMillis, "")
+            val isInMonth = month - 1 == calendar[Calendar.MONTH] && year == calendar[Calendar.YEAR]
+
+            val key = "${calendar[Calendar.YEAR]}${String.format(
+                "%02d%02d",
+                calendar[Calendar.MONTH] + 1,
+                calendar[Calendar.DATE]
+            )}"
+            Day(key, mutableListOf(), !isInMonth)
         }
     }
 
-    fun createWeek(year: Int, month: Int, day: Int): MutableList<Day> {
-        val calendar = Calendar.getInstance()
-        calendar.set(year, month, day)
+    val createDefaultDays: (YearMonths) -> (DaysByYearMonths) -> YearMonths? =
+        { yearMonths ->
+            { daysByYearMonth ->
+                val addedMonths = yearMonths.minus(daysByYearMonth.keys) as MutableList<YearMonth>
+                addedMonths.apply {
+                    map { addedYearMonth ->
+                        if (daysByYearMonth.containsKey(addedYearMonth)) return@map
 
-        calendar.add(Calendar.DAY_OF_MONTH, Calendar.SUNDAY - calendar.get(Calendar.DAY_OF_WEEK))
-
-        val weeks = mutableListOf(Day(calendar.timeInMillis, ""))
-        MutableList(6) {
-            calendar.add(Calendar.DAY_OF_MONTH, 1)
-            weeks.add(Day(calendar.timeInMillis, ""))
+                        daysByYearMonth[addedYearMonth] = createYearMonth(
+                            addedYearMonth.year,
+                            addedYearMonth.monthValue
+                        )
+                    }
+                }
+            }
         }
-
-        return weeks
-    }
 }

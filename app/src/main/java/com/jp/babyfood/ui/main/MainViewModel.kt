@@ -1,6 +1,5 @@
 package com.jp.babyfood.ui.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.jp.babyfood.data.entity.User
@@ -16,12 +15,13 @@ class MainViewModel @Inject constructor(
     val user: LiveData<User> = _user
 
     fun updateUser() {
-        addDisposable(
-            userRepository.getUser(true).subscribe(
-                { _user.value = it },
-                { Log.e("AB_TAG", "Throwable : ", it) }
-            )
-        )
+//TODO GET USER DATA
+//        addDisposable(
+//            userRepository.getUser(true).subscribe(
+//                { _user.value = it },
+//                { Log.e("AB_TAG", "Throwable : ", it) }
+//            )
+//        )
     }
 
 }

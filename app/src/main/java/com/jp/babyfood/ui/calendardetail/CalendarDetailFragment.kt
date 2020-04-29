@@ -24,7 +24,7 @@ class CalendarDetailFragment :
         setCollapsingActionBar()
         setIngredientAdapter()
 
-        viewModel.updateIngredients(args.day)
+        viewModel.updateIngredients(args.food)
     }
 
     private fun setCollapsingActionBar() {

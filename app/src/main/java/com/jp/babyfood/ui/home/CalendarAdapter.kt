@@ -59,6 +59,6 @@ class DayDiffCallback : DiffUtil.ItemCallback<Day>() {
     }
 
     override fun areContentsTheSame(oldItem: Day, newItem: Day): Boolean {
-        return oldItem == newItem
+        return oldItem.foods.size == newItem.foods.size
     }
 }

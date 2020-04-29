@@ -15,10 +15,10 @@ class HomePagerScrollDispatcher {
             return
         }
 
-        viewModel.onUpdate()
+        viewModel.updateMonths()
     }
 
     interface OnFirstPage {
-        fun onUpdate()
+        fun updateMonths()
     }
 }

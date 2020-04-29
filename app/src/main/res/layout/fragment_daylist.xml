@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.jp.babyfood.data.entity.Day" />
+
+        <import type="com.jp.babyfood.data.entity.Food" />
+
+        <variable
+            name="day"
+            type="Day" />
+
+        <variable
+            name="viewModel"
+            type="com.jp.babyfood.ui.daylist.DayListViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/day_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:bind_items="@{viewModel.day.foods}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_day_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:onClick="@{(view) -> viewModel.openCalendarDetail((Food) null)}"
+            android:src="@drawable/ic_add_black_18dp"
+            android:visibility="invisible"
+            app:backgroundTint="@color/secondaryColor"
+            app:borderWidth="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

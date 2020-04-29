@@ -31,8 +31,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
         setCalendarPager()
         setNavigation()
-
-        viewModel.initMonth()
     }
 
     private fun setCalendarPager() {
@@ -72,14 +70,26 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             openCalendarDetail(it)
         })
 
-        viewModel.months.observe(viewLifecycleOwner, Observer {
-            it?.let((adapter as HomeCalendarPageAdapter)::submitList)
-            viewBinding.homeCalendarPager.adapter?.notifyItemInserted(0)
+        viewModel.yearMonths.observe(viewLifecycleOwner, Observer {
+            (viewBinding.homeCalendarPager.adapter as HomeCalendarPageAdapter).submitList(it)
+        })
+
+        viewModel.insertedNewPage.observe(viewLifecycleOwner, EventObserver {
+            (viewBinding.homeCalendarPager.adapter as HomeCalendarPageAdapter).notifyItemInserted(it)
+        })
+
+        viewModel.onUpdateSavedDays.observe(viewLifecycleOwner, EventObserver {
+            val viewHolder =
+                viewBinding.homeCalendarPager.findViewHolderForAdapterPosition(it.first)
+
+            if (viewHolder is HomeCalendarPageAdapter.CalendarPageViewHolder) {
+                viewHolder.getChildAdapter().submitList(it.second)
+            }
         })
     }
 
     private fun openCalendarDetail(item: Day) {
-        val action = HomeFragmentDirections.actionCalendarPageFragmentToCalendarDetailFragment(item)
+        val action = HomeFragmentDirections.actionHomeFragmentToDayListFragment(item)
         findNavController().navigate(action)
     }
 }

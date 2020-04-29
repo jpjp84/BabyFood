@@ -25,8 +25,8 @@
         android:label="Baby Food">
 
         <action
-            android:id="@+id/action_calendarPageFragment_to_calendarDetailFragment"
-            app:destination="@id/calendarDetailFragment" />
+            android:id="@+id/action_homeFragment_to_dayListFragment"
+            app:destination="@id/dayListFragment" />
     </fragment>
 
     <fragment
@@ -35,12 +35,26 @@
         android:label="History" />
 
     <fragment
+        android:id="@+id/dayListFragment"
+        android:name="com.jp.babyfood.ui.daylist.DayListFragment"
+        android:label="List">
+        <action
+            android:id="@+id/action_dayListFragment_to_calendarDetailFragment"
+            app:destination="@id/calendarDetailFragment" />
+        <argument
+            android:name="day"
+            app:argType="com.jp.babyfood.data.entity.Day" />
+    </fragment>
+
+    <fragment
         android:id="@+id/calendarDetailFragment"
         android:name="com.jp.babyfood.ui.calendardetail.CalendarDetailFragment"
         android:label="Add Day">
         <argument
-            android:name="day"
-            app:argType="com.jp.babyfood.data.entity.Day" />
+            android:name="food"
+            android:defaultValue="@null"
+            app:argType="com.jp.babyfood.data.entity.Food"
+            app:nullable="true" />
     </fragment>
 
     <argument
