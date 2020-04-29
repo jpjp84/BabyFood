@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.jp.babyfood.data.entity.Day
+import com.jp.babyfood.data.entity.Food
 import com.jp.babyfood.databinding.RowDaylistBinding
 
 class DayListAdapter(private val viewModel: DayListViewModel) :
-    ListAdapter<Day, DayListAdapter.CalendarViewHolder>(DayDiffCallback()) {
+    ListAdapter<Food, DayListAdapter.CalendarViewHolder>(FoodDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarViewHolder {
         return CalendarViewHolder.from(parent)
@@ -22,8 +22,9 @@ class DayListAdapter(private val viewModel: DayListViewModel) :
     class CalendarViewHolder constructor(private val binding: RowDaylistBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: DayListViewModel, items: Day) {
+        fun bind(viewModel: DayListViewModel, item: Food) {
             binding.viewModel = viewModel
+            binding.food = item
         }
 
         companion object {
@@ -37,12 +38,12 @@ class DayListAdapter(private val viewModel: DayListViewModel) :
     }
 }
 
-class DayDiffCallback : DiffUtil.ItemCallback<Day>() {
-    override fun areItemsTheSame(oldItem: Day, newItem: Day): Boolean {
-        return oldItem.date == newItem.date
+class FoodDiffCallback : DiffUtil.ItemCallback<Food>() {
+    override fun areItemsTheSame(oldItem: Food, newItem: Food): Boolean {
+        return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: Day, newItem: Day): Boolean {
+    override fun areContentsTheSame(oldItem: Food, newItem: Food): Boolean {
         return oldItem == newItem
     }
 }

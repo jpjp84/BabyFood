@@ -5,7 +5,7 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.jp.babyfood.R
-import com.jp.babyfood.data.entity.Day
+import com.jp.babyfood.data.entity.Food
 import com.jp.babyfood.databinding.FragmentDaylistBinding
 import com.jp.babyfood.ui.base.BaseFragment
 import com.jp.babyfood.util.EventObserver
@@ -23,6 +23,7 @@ class DayListFragment : BaseFragment<DayListViewModel, FragmentDaylistBinding>()
 
         setNavigation()
         setDayListAdapter()
+        setAddBtn()
 
         viewModel.initDayLists(args.day)
     }
@@ -37,7 +38,11 @@ class DayListFragment : BaseFragment<DayListViewModel, FragmentDaylistBinding>()
         })
     }
 
-    private fun openCalendarDetail(item: Day) {
+    private fun setAddBtn() {
+        viewBinding.addDayBtn.postDelayed({ viewBinding.addDayBtn.show() }, 250)
+    }
+
+    private fun openCalendarDetail(item: Food?) {
         val action = DayListFragmentDirections.actionDayListFragmentToCalendarDetailFragment(item)
         findNavController().navigate(action)
     }

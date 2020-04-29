@@ -51,8 +51,10 @@
         android:name="com.jp.babyfood.ui.calendardetail.CalendarDetailFragment"
         android:label="Add Day">
         <argument
-            android:name="day"
-            app:argType="com.jp.babyfood.data.entity.Day" />
+            android:name="food"
+            android:defaultValue="@null"
+            app:argType="com.jp.babyfood.data.entity.Food"
+            app:nullable="true" />
     </fragment>
 
     <argument

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
-        <import type="android.widget.CompoundButton" />
+        <import type="android.graphics.Color" />
 
         <variable
             name="day"
@@ -33,11 +31,25 @@
             android:textColor="@{day.disable ? @color/primaryDisableTextColor : @color/primaryTextColor}" />
 
         <TextView
-            android:id="@+id/calendar_work"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@{Color.parseColor(day.foods.size() >= 1 ? day.foods.get(0).color : `#00000000`)}"
             android:gravity="center"
-            android:text="@{day.foods.size() > 0 ? day.foods.get(0).title: ``}" />
+            android:text="@{day.foods.size() >= 1 ? day.foods.get(0).title: ``}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@{Color.parseColor(day.foods.size() >= 2 ? day.foods.get(1).color : `#00000000`)}"
+            android:gravity="center"
+            android:text="@{day.foods.size() >= 2 ? day.foods.get(1).title: ``}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@{Color.parseColor(day.foods.size() >= 3 ? day.foods.get(2).color : `#00000000`)}"
+            android:gravity="center"
+            android:text="@{day.foods.size() >= 3 ? day.foods.get(2).title: ``}" />
 
     </LinearLayout>
 </layout>
