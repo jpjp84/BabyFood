@@ -46,7 +46,7 @@
             app:argType="com.jp.babyfood.data.entity.Day" />
     </fragment>
 
-    <fragment
+    <dialog
         android:id="@+id/calendarDetailFragment"
         android:name="com.jp.babyfood.ui.calendardetail.CalendarDetailFragment"
         android:label="Add Day">
@@ -55,7 +55,7 @@
             android:defaultValue="@null"
             app:argType="com.jp.babyfood.data.entity.Food"
             app:nullable="true" />
-    </fragment>
+    </dialog>
 
     <argument
         android:name="userMessage"
