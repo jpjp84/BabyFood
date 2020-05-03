@@ -40,7 +40,6 @@
                     android:id="@+id/header"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:fitsSystemWindows="true"
                     android:maxHeight="250dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/img_sample"
@@ -50,10 +49,25 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin" />
+                    app:layout_collapseMode="pin">
 
+                    <Space
+                        android:id="@+id/toolbar_holder"
+                        android:layout_width="100dp"
+                        android:layout_height="?attr/actionBarSize" />
+                </androidx.appcompat.widget.Toolbar>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginBottom="20dp"
+            android:textSize="30sp"
+            app:collapsedTextSize="18sp"
+            android:text="test"
+            app:collapsedTarget="@id/toolbar_holder"
+            app:layout_behavior=".util.CollapsingEditTextBehavior" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -67,21 +81,6 @@
                 android:layout_height="match_parent"
                 android:background="@color/baseBackgroundColor">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/title_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toTopOf="@id/ingredient_list"
-                    app:layout_constraintLeft_toLeftOf="parent">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/food_name_edit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="이유식 이름"
-                        android:text="@={viewModel.food.title}" />
-                </com.google.android.material.textfield.TextInputLayout>
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/ingredient_list"
                     android:layout_width="match_parent"
@@ -90,7 +89,7 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toTopOf="@id/ingredient_allergy_text"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/title_input" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/ingredient_allergy_text"
