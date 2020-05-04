@@ -72,7 +72,7 @@ class HomeViewModel @Inject constructor(
 
     private fun getDaysByYearMonth(yearMonth: YearMonth) {
         addDisposable(
-            foodRepository.getDailyFoods(yearMonth, true)
+            foodRepository.getDailyFoods(yearMonth, false)
                 .subscribe(
                     { replaceNewDays(yearMonth, it) },
                     { t -> Log.e("BF_TAG", "Throwable : ", t) }

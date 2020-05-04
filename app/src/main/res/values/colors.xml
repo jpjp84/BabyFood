@@ -11,9 +11,11 @@
     <color name="primaryTextColor">#000000</color>
     <color name="primaryTextLightColor">#ffffff</color>
     <color name="secondaryTextColor">#000000</color>
+    <color name="secondaryTextLightColor">#E0E0E0</color>
     <color name="primaryDisableTextColor">#55000000</color>
 
     <color name="baseBackgroundColor">#e0e0e0</color>
+    <color name="contentBackgroundColor">#fff</color>
     <color name="accentColor">#D81B60</color>
 
     <color name="border">#E0E0E0</color>

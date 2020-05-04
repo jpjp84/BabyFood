@@ -8,7 +8,12 @@
     <string name="menu_home">홈</string>
     <string name="menu_history">기록</string>
 
+    <!-- Food -->
+    <string name="food_title_hint">이유식 이름</string>
+
     <!-- Ingredient -->
+
+    <string name="ingredient_list_title">재료</string>
     <string name="ingredient_title">재료 이름</string>
     <string name="ingredient_gram">gram 수</string>
     <string name="ingredient_eat_gram">섭취량</string>

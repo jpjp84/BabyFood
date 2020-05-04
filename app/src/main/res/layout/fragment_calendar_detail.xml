@@ -63,13 +63,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#9f000000"
-            android:padding="20dp"
+            android:hint="@string/food_title_hint"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:padding="@dimen/default_padding"
             android:singleLine="true"
-            android:text="test"
             android:textColor="@color/primaryTextLightColor"
-            android:textSize="30sp"
+            android:textColorHint="@color/secondaryTextLightColor"
+            android:textSize="@dimen/text_title"
             app:collapsedTarget="@id/toolbar_holder"
-            app:collapsedTextSize="18sp"
+            app:collapsedTextSize="@dimen/text_system_default"
             app:layout_behavior=".util.CollapsingEditTextBehavior" />
 
         <androidx.core.widget.NestedScrollView
@@ -82,12 +85,28 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/baseBackgroundColor">
+                android:background="@color/contentBackgroundColor">
+
+                <TextView
+                    android:id="@+id/ingredient_list_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/default_padding"
+                    android:background="@drawable/bg_row_ingredient"
+                    android:paddingTop="@dimen/default_padding"
+                    android:paddingBottom="@dimen/padding_small"
+                    android:text="@string/ingredient_list_title"
+                    android:textSize="@dimen/text_subtitle"
+                    app:layout_constraintBottom_toTopOf="@id/ingredient_list"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/ingredient_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="@dimen/default_padding"
                     app:bind_items="@{viewModel.ingredients}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toTopOf="@id/ingredient_allergy_text"
@@ -96,9 +115,14 @@
 
                 <TextView
                     android:id="@+id/ingredient_allergy_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/default_padding"
+                    android:background="@drawable/bg_row_ingredient"
+                    android:paddingTop="@dimen/default_padding"
+                    android:paddingBottom="@dimen/padding_small"
                     android:text="@string/ingredient_allergy_title"
+                    android:textSize="@dimen/text_subtitle"
                     app:layout_constraintBottom_toTopOf="@id/ingredient_allergy_radiogroup"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ingredient_list" />
@@ -110,7 +134,7 @@
                     android:checkedButton="@={viewModel.food.allergy}"
                     app:layout_constraintBottom_toTopOf="@id/ingredient_comment_text"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ingredient_list">
+                    app:layout_constraintTop_toBottomOf="@id/ingredient_allergy_text">
 
                     <RadioButton
                         android:id="@+id/ingredient_allergy_radio"
@@ -133,9 +157,14 @@
 
                 <TextView
                     android:id="@+id/ingredient_comment_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/default_padding"
+                    android:background="@drawable/bg_row_ingredient"
+                    android:paddingTop="@dimen/default_padding"
+                    android:paddingBottom="@dimen/padding_small"
                     android:text="@string/ingredient_comment_title"
+                    android:textSize="@dimen/text_subtitle"
                     app:layout_constraintBottom_toTopOf="@id/ingredient_comment_edit"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ingredient_allergy_radiogroup" />

@@ -40,8 +40,7 @@ class CalendarDetailFragment :
         setCollapsingActionBar()
         setIngredientAdapter()
         viewBinding.toolbar.navigationIcon =
-            resources.getDrawable(android.R.drawable.ic_menu_close_clear_cancel)
-        viewBinding.toolbar.title = "Test"
+            resources.getDrawable(android.R.drawable.ic_menu_close_clear_cancel, null)
 
         viewModel.updateIngredients(args.food)
     }
