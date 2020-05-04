@@ -6,15 +6,19 @@ package com.jp.babyfood.util
 
 import android.content.Context
 import android.content.res.TypedArray
+import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.View
 import android.widget.EditText
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.graphics.alpha
 import androidx.core.view.marginBottom
+import androidx.core.view.setPadding
 import com.google.android.material.appbar.AppBarLayout
 import com.jp.babyfood.R
+import com.jp.babyfood.util.LogUtil.LOGI
 
 
 class CollapsingEditTextBehavior(context: Context, attrs: AttributeSet?) :
@@ -69,6 +73,7 @@ class CollapsingEditTextBehavior(context: Context, attrs: AttributeSet?) :
         val scrollRange = appBarLayout.totalScrollRange
         val distanceFactor = (appBarLayout.y * -1) / scrollRange
 
+        LOGI("BF_TAG", "attr : ${viewInfo.toList()}");
         child.x = calculateAttrByFactor(distanceFactor, X)
         child.y = calculateAttrByFactor(distanceFactor, Y)
         child.layoutParams = (child.layoutParams as CoordinatorLayout.LayoutParams).apply {
@@ -76,11 +81,22 @@ class CollapsingEditTextBehavior(context: Context, attrs: AttributeSet?) :
             this.height = calculateAttrByFactor(distanceFactor, HEIGHT).toInt()
         }
 
+        //modify : change text size when child is edittext
         if (child is EditText) {
             child.setTextSize(
                 TypedValue.COMPLEX_UNIT_PX,
                 calculateAttrByFactor(distanceFactor, TEXT_SIZE)
             )
+        }
+
+        //modify : change background color alpha when child.background is ColorDrawable
+        if (child.background is ColorDrawable) {
+            child.background.alpha = calculateAttrToZeroByFactor(distanceFactor, BG_ALPHA)
+        }
+
+        //modify : change padding to zero alpha when exist child padding
+        if (viewInfo[PADDING] > 0) {
+            child.setPadding(calculateAttrToZeroByFactor(distanceFactor, PADDING))
         }
 
         return true
@@ -91,7 +107,7 @@ class CollapsingEditTextBehavior(context: Context, attrs: AttributeSet?) :
             return
         }
 
-        viewInfo = FloatArray(5).apply {
+        viewInfo = FloatArray(7).apply {
             this[X] = child.x
             //modify : Always at the bottom of AppBarLayout
             this[Y] = (dependency.height - child.height).toFloat() - child.marginBottom
@@ -100,6 +116,14 @@ class CollapsingEditTextBehavior(context: Context, attrs: AttributeSet?) :
 
             if (child is EditText) {
                 this[TEXT_SIZE] = child.textSize
+            }
+
+            if (child.background is ColorDrawable) {
+                this[BG_ALPHA] = (child.background as ColorDrawable).color.alpha.toFloat()
+            }
+
+            if (child.paddingTop > 0) {
+                this[PADDING] = child.paddingTop.toFloat()
             }
         }
 
@@ -110,6 +134,7 @@ class CollapsingEditTextBehavior(context: Context, attrs: AttributeSet?) :
 
             this[WIDTH] += target.width.toFloat()
             this[HEIGHT] += target.height.toFloat()
+
             if (child is EditText) {
                 this[TEXT_SIZE] = collapsedTextSize
             }
@@ -136,11 +161,17 @@ class CollapsingEditTextBehavior(context: Context, attrs: AttributeSet?) :
         return (viewInfo[attrIndex] + (factor * (targetViewInfo[attrIndex] - viewInfo[attrIndex])))
     }
 
+    private fun calculateAttrToZeroByFactor(factor: Float, attrIndex: Int): Int {
+        return (viewInfo[attrIndex] - (viewInfo[attrIndex] * factor)).toInt()
+    }
+
     companion object {
         private const val X = 0
         private const val Y = 1
         private const val WIDTH = 2
         private const val HEIGHT = 3
         private const val TEXT_SIZE = 4
+        private const val BG_ALPHA = 5
+        private const val PADDING = 6
     }
 }

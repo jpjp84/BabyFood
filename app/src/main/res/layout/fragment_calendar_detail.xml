@@ -61,12 +61,15 @@
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_marginBottom="20dp"
-            android:textSize="30sp"
-            app:collapsedTextSize="18sp"
+            android:layout_height="wrap_content"
+            android:background="#9f000000"
+            android:padding="20dp"
+            android:singleLine="true"
             android:text="test"
+            android:textColor="@color/primaryTextLightColor"
+            android:textSize="30sp"
             app:collapsedTarget="@id/toolbar_holder"
+            app:collapsedTextSize="18sp"
             app:layout_behavior=".util.CollapsingEditTextBehavior" />
 
         <androidx.core.widget.NestedScrollView
