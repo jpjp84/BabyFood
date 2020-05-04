@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import java.lang.reflect.Type
+
 
 object SharedPrefUtil {
     private fun getPreference(context: Context): SharedPreferences =
@@ -23,5 +25,13 @@ object SharedPrefUtil {
 
     inline fun <reified T> get(context: Context, key: String): T? {
         return GsonBuilder().create().fromJson(get(context, key), T::class.java)
+    }
+
+    inline fun <T> getList(
+        context: Context,
+        key: String,
+        type: Type
+    ): List<T>? {
+        return GsonBuilder().create().fromJson(get(context, key), type)
     }
 }
