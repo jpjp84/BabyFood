@@ -132,6 +132,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checkedButton="@={viewModel.food.allergy}"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/default_padding"
                     app:layout_constraintBottom_toTopOf="@id/ingredient_comment_text"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ingredient_allergy_text">
@@ -173,21 +175,32 @@
                     android:id="@+id/ingredient_comment_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_padding"
+                    android:background="@color/baseBackgroundColor"
+                    android:gravity="top"
+                    android:hint="@string/ingredient_comment_hint"
+                    android:maxLength="200"
+                    android:minLines="5"
                     android:text="@={viewModel.food.comment}"
-                    app:layout_constraintBottom_toTopOf="@id/ingredient_save_btn"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ingredient_comment_text" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/ingredient_save_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{view -> viewModel.saveIngredients()}"
-                    android:text="@string/save"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ingredient_comment_edit" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ingredient_save_btn"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="@dimen/default_padding"
+            android:onClick="@{view -> viewModel.saveIngredients()}"
+            android:padding="@dimen/padding_button"
+            android:text="@string/save"
+            android:textColor="@color/secondaryLightColor"
+            app:cornerRadius="@dimen/default_corner"
+            app:rippleColor="#33AAAAAA" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

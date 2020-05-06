@@ -5,8 +5,6 @@
 
     <data>
 
-        <import type="android.widget.CompoundButton" />
-
         <variable
             name="ingredient"
             type="com.jp.babyfood.data.entity.Ingredient" />
@@ -16,32 +14,53 @@
             type="com.jp.babyfood.ui.calendardetail.CalendarDetailViewModel" />
     </data>
 
-    <LinearLayout
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_row_ingredient"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/ingredient_title_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ingredient_title" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ingredient_title_edit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:hint="@string/ingredient_title"
+            android:textSize="@dimen/text_content"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintLeft_toRightOf="@id/ingredient_remove_btn"
+            app:layout_constraintRight_toLeftOf="@id/ingredient_gram_edit"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/ingredient_gram_text"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ingredient_remove_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ingredient_gram" />
+            android:src="@drawable/ic_remove_circle_24px"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/ingredient_title_edit"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ingredient_gram_edit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="@string/ingredient_gram"
+            android:textSize="@dimen/text_content"
+            app:layout_constraintLeft_toRightOf="@id/ingredient_title_edit"
+            app:layout_constraintRight_toLeftOf="@id/ingredient_unit"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ingredient_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/ingredient_gram_unit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/ingredient_gram_edit"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
