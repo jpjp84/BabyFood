@@ -8,6 +8,7 @@ import androidx.navigation.fragment.navArgs
 import com.jp.babyfood.R
 import com.jp.babyfood.databinding.FragmentCalendarDetailBinding
 import com.jp.babyfood.ui.base.BaseDialogFragment
+import com.jp.babyfood.util.EventObserver
 import com.jp.babyfood.util.KeyboardUtil
 
 
@@ -41,9 +42,10 @@ class CalendarDetailFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setIngredientAdapter()
         setNavigation()
         setAdjustResizeByKeyboardUtil()
+        setIngredientAdapter()
+        setEventObserver()
 
         viewModel.updateIngredients(args.food)
     }
@@ -53,12 +55,22 @@ class CalendarDetailFragment :
             resources.getDrawable(android.R.drawable.ic_menu_close_clear_cancel, null)
     }
 
-    private fun setIngredientAdapter() {
-        viewBinding.ingredientList.adapter = IngredientAdapter(viewModel)
-    }
-
     private fun setAdjustResizeByKeyboardUtil() {
         keyboardUtil?.enable()
+    }
+
+    private fun setEventObserver() {
+        viewModel.addIngredient.observe(viewLifecycleOwner, EventObserver {
+            viewBinding.ingredientList.adapter?.notifyItemInserted(it)
+        })
+
+        viewModel.removeIngredient.observe(viewLifecycleOwner, EventObserver {
+            viewBinding.ingredientList.adapter?.notifyItemRemoved(it)
+        })
+    }
+
+    private fun setIngredientAdapter() {
+        viewBinding.ingredientList.adapter = IngredientAdapter(viewModel)
     }
 
     override fun onDestroy() {
