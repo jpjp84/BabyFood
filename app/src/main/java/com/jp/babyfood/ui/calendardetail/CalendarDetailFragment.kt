@@ -20,9 +20,8 @@ class CalendarDetailFragment :
 
     override fun getViewLayoutRes(): Int = R.layout.fragment_calendar_detail
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_FRAME, R.style.AppTheme_Popup)
+    override fun getTheme(): Int {
+        return R.style.AppTheme_Popup
     }
 
     override fun onCreateView(

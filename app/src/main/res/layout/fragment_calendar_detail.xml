@@ -40,6 +40,7 @@
                     android:id="@+id/header"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fitsSystemWindows="true"
                     android:maxHeight="250dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/img_sample"
