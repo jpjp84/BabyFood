@@ -15,6 +15,7 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/calendar_detail_wrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
@@ -186,25 +187,28 @@
                     android:maxLength="200"
                     android:minLines="5"
                     android:text="@={viewModel.food.comment}"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/ingredient_save_btn"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ingredient_comment_text" />
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/ingredient_save_btn"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_margin="@dimen/default_padding"
+                    android:onClick="@{view -> viewModel.saveIngredients()}"
+                    android:padding="@dimen/padding_button"
+                    android:text="@string/save"
+                    android:textColor="@color/secondaryLightColor"
+                    app:cornerRadius="@dimen/default_corner"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ingredient_comment_edit"
+                    app:rippleColor="#33AAAAAA" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/ingredient_save_btn"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_margin="@dimen/default_padding"
-            android:onClick="@{view -> viewModel.saveIngredients()}"
-            android:padding="@dimen/padding_button"
-            android:text="@string/save"
-            android:textColor="@color/secondaryLightColor"
-            app:cornerRadius="@dimen/default_corner"
-            app:rippleColor="#33AAAAAA" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
