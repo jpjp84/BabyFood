@@ -4,4 +4,8 @@
         <attr name="collapsedTarget" format="reference" />
         <attr name="collapsedTextSize" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="GridRadioGroup">
+        <attr name="checkedButton" format="reference" />
+    </declare-styleable>
 </resources>
