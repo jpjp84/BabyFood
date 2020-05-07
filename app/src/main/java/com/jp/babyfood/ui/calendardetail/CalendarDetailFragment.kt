@@ -37,16 +37,11 @@ class CalendarDetailFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setCollapsingActionBar()
         setIngredientAdapter()
         viewBinding.toolbar.navigationIcon =
             resources.getDrawable(android.R.drawable.ic_menu_close_clear_cancel, null)
 
         viewModel.updateIngredients(args.food)
-    }
-
-    private fun setCollapsingActionBar() {
-//        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
     }
 
     private fun setIngredientAdapter() {

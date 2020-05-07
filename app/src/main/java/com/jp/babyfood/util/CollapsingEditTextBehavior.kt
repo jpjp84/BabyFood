@@ -18,7 +18,6 @@ import androidx.core.view.marginBottom
 import androidx.core.view.setPadding
 import com.google.android.material.appbar.AppBarLayout
 import com.jp.babyfood.R
-import com.jp.babyfood.util.LogUtil.LOGI
 
 
 class CollapsingEditTextBehavior(context: Context, attrs: AttributeSet?) :
@@ -73,7 +72,6 @@ class CollapsingEditTextBehavior(context: Context, attrs: AttributeSet?) :
         val scrollRange = appBarLayout.totalScrollRange
         val distanceFactor = (appBarLayout.y * -1) / scrollRange
 
-        LOGI("BF_TAG", "attr : ${viewInfo.toList()}");
         child.x = calculateAttrByFactor(distanceFactor, X)
         child.y = calculateAttrByFactor(distanceFactor, Y)
         child.layoutParams = (child.layoutParams as CoordinatorLayout.LayoutParams).apply {

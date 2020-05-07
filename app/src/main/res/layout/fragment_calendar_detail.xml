@@ -127,11 +127,11 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ingredient_list" />
 
-                <RadioGroup
+                <com.jp.babyfood.util.GridRadioGroup
                     android:id="@+id/ingredient_allergy_radiogroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:checkedButton="@={viewModel.food.allergy}"
+                    android:columnCount="2"
                     android:orientation="horizontal"
                     android:padding="@dimen/default_padding"
                     app:layout_constraintBottom_toTopOf="@id/ingredient_comment_text"
@@ -142,20 +142,23 @@
                         android:id="@+id/ingredient_allergy_radio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
                         android:text="@string/ingredient_allergy" />
 
                     <RadioButton
                         android:id="@+id/ingredient_emesis_radio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
                         android:text="@string/ingredient_emesis" />
 
                     <RadioButton
                         android:id="@+id/ingredient_diarrhea_radio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
                         android:text="@string/ingredient_diarrhea" />
-                </RadioGroup>
+                </com.jp.babyfood.util.GridRadioGroup>
 
                 <TextView
                     android:id="@+id/ingredient_comment_text"
