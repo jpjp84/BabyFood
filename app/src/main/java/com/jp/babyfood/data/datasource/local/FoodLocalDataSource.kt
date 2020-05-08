@@ -29,7 +29,7 @@ class FoodLocalDataSource constructor(
         }
     }
 
-    override fun getDailyFoodByDay(day: String): Flowable<Food> {
+    override fun getDailyFoodById(id: String): Flowable<Food> {
         TODO("Not yet implemented")
     }
 

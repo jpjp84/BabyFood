@@ -47,7 +47,7 @@ class CalendarDetailFragment :
         setIngredientAdapter()
         setEventObserver()
 
-        viewModel.updateIngredients(args.food)
+        args.food?.let { viewModel.updateIngredients(it) }
     }
 
     private fun setNavigation() {

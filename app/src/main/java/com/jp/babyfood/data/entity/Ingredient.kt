@@ -7,7 +7,13 @@ import kotlinx.android.parcel.Parcelize
 
 
 @Parcelize
-data class Ingredient constructor(var name: String = "", var gram: Int = 0) : Parcelable,
+data class Ingredient constructor(
+    var name: String = "",
+    var gram: Int = 0,
+    var allergyCount: Int = 0,
+    var emesisCount: Int = 0,
+    var diarrheaCount: Int = 0
+) : Parcelable,
     BaseObservable() {
 
     var gramStr: String

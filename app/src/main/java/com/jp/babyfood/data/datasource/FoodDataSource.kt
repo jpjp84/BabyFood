@@ -8,5 +8,5 @@ interface FoodDataSource : BaseDataSource<List<Day>> {
 
     fun getDailyFoods(yearMonth: String): Flowable<List<Day>>
 
-    fun getDailyFoodByDay(day: String): Flowable<Food>
+    fun getDailyFoodById(id: String): Flowable<Food>
 }
