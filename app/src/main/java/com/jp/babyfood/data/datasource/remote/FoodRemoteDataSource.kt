@@ -4,6 +4,7 @@ import com.jp.babyfood.data.datasource.FoodDataSource
 import com.jp.babyfood.data.datasource.api.FoodAPI
 import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.data.entity.Food
+import com.jp.babyfood.data.entity.Ingredient
 import com.jp.babyfood.util.NetworkUtil
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -20,8 +21,15 @@ class FoodRemoteDataSource : FoodDataSource {
             .map { response -> response.result ?: throw Exception(response.error) }
     }
 
-    override fun getDailyFoodByDay(day: String): Flowable<Food> {
-        TODO("Not yet implemented")
+    override fun getDailyFoodById(id: String): Flowable<Food> {
+        val ingredients = mutableListOf(
+            Ingredient("쌀미음", 10),
+            Ingredient("소고기", 10),
+            Ingredient("브로콜리", 10)
+        )
+        return Flowable.defer {
+            Flowable.just(Food(id, "이유식1", ingredients, color = "#332332"))
+        }
     }
 
     override fun isCached(): Single<Boolean> {
