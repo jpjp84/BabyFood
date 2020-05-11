@@ -43,8 +43,8 @@
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true"
                     android:maxHeight="250dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/img_sample"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_add_photo_24px"
                     app:layout_collapseMode="parallax" />
 
                 <androidx.appcompat.widget.Toolbar
@@ -121,7 +121,6 @@
                         app:layout_constraintLeft_toRightOf="@id/ingredient_list_title"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -131,56 +130,9 @@
                     android:padding="@dimen/default_padding"
                     app:bind_items="@{viewModel.ingredients}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toTopOf="@id/ingredient_allergy_text"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/ingredient_allergy_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/default_padding"
-                    android:background="@drawable/bg_row_ingredient"
-                    android:paddingTop="@dimen/default_padding"
-                    android:paddingBottom="@dimen/padding_small"
-                    android:text="@string/ingredient_allergy_title"
-                    android:textSize="@dimen/text_subtitle"
-                    app:layout_constraintBottom_toTopOf="@id/ingredient_allergy_radiogroup"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ingredient_list" />
-
-                <com.jp.babyfood.util.GridRadioGroup
-                    android:id="@+id/ingredient_allergy_radiogroup"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:columnCount="2"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/default_padding"
                     app:layout_constraintBottom_toTopOf="@id/ingredient_comment_text"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ingredient_allergy_text">
-
-                    <RadioButton
-                        android:id="@+id/ingredient_allergy_radio"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:text="@string/ingredient_allergy" />
-
-                    <RadioButton
-                        android:id="@+id/ingredient_emesis_radio"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:text="@string/ingredient_emesis" />
-
-                    <RadioButton
-                        android:id="@+id/ingredient_diarrhea_radio"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:text="@string/ingredient_diarrhea" />
-                </com.jp.babyfood.util.GridRadioGroup>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/ingredient_comment_text"
@@ -194,7 +146,7 @@
                     android:textSize="@dimen/text_subtitle"
                     app:layout_constraintBottom_toTopOf="@id/ingredient_comment_edit"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ingredient_allergy_radiogroup" />
+                    app:layout_constraintTop_toBottomOf="@id/ingredient_list" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ingredient_comment_edit"

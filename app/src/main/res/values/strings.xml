@@ -16,7 +16,7 @@
     <string name="ingredient_list_title">재료</string>
     <string name="ingredient_title">재료</string>
     <string name="ingredient_gram">0</string>
-    <string name="ingredient_gram_unit">g</string>
+    <string name="ingredient_gram_unit">%dg</string>
     <string name="ingredient_eat_gram">섭취량</string>
     <string name="ingredient_allergy_title">알레르기 반응</string>
     <string name="ingredient_allergy">알레르기</string>
@@ -36,4 +36,5 @@
     <string name="thu">목</string>
     <string name="fri">금</string>
     <string name="sat">토</string>
+    <string name="remove">삭제</string>
 </resources>

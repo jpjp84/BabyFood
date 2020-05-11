@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.text.TextWatcher
+import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.TextView
@@ -68,4 +69,9 @@ fun bindIngredient(recyclerView: RecyclerView, ingredients: List<Ingredient>?) {
 @BindingAdapter("text_watcher")
 fun setTextWatcher(editText: AutoCompleteTextView, textWatcher: TextWatcher) {
     editText.addTextChangedListener(textWatcher)
+}
+
+@BindingAdapter("visible")
+fun setVisible(view: View, visible: Boolean) {
+    view.visibility = if(visible) View.VISIBLE else View.GONE
 }

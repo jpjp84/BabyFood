@@ -3,6 +3,8 @@ package com.jp.babyfood.data.entity
 import android.os.Parcelable
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
+import com.jp.babyfood.BR
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 
@@ -24,5 +26,13 @@ data class Ingredient constructor(
             } catch (e: NumberFormatException) {
                 this.gram = 0
             }
+        }
+
+    @IgnoredOnParcel
+    var expand: Boolean = false
+        @Bindable get
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.expand)
         }
 }

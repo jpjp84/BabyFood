@@ -70,7 +70,7 @@ class CalendarDetailFragment :
     }
 
     private fun setIngredientAdapter() {
-        viewBinding.ingredientList.adapter = IngredientAdapter(viewModel)
+        viewBinding.ingredientList.adapter = IngredientAdapter(viewModel, viewLifecycleOwner)
     }
 
     override fun onDestroy() {
