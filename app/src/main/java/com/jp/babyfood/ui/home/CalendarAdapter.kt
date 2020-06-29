@@ -11,10 +11,6 @@ import com.jp.babyfood.databinding.RowCalendarBinding
 class CalendarAdapter(private val viewModel: HomeViewModel) :
     ListAdapter<Day, CalendarAdapter.CalendarViewHolder>(DayDiffCallback()) {
 
-    companion object {
-        const val COLUMN_COUNT = 6
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarViewHolder {
         return CalendarViewHolder.from(parent)
     }
@@ -34,20 +30,9 @@ class CalendarAdapter(private val viewModel: HomeViewModel) :
         companion object {
             fun from(parent: ViewGroup): CalendarViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = RowCalendarBinding.inflate(layoutInflater, parent, false).apply {
-                    resizeChildHeight(
-                        this,
-                        parent
-                    )
-                }
+                val binding = RowCalendarBinding.inflate(layoutInflater, parent, false)
 
-                return CalendarViewHolder(
-                    binding
-                )
-            }
-
-            private fun resizeChildHeight(binding: RowCalendarBinding, parent: ViewGroup) {
-                binding.root.layoutParams.height = parent.height / COLUMN_COUNT
+                return CalendarViewHolder(binding)
             }
         }
     }

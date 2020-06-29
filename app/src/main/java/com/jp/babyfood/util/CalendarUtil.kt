@@ -15,6 +15,10 @@ object CalendarUtil {
         return createYearMonth(year.toInt(), month.toInt())
     }
 
+    fun createYearMonth(yearMonth: YearMonth): List<Day> {
+        return createYearMonth(yearMonth.year, yearMonth.monthValue)
+    }
+
     fun createYearMonth(
         year: Int = YearMonth.now().year,
         month: Int = YearMonth.now().monthValue
@@ -32,7 +36,7 @@ object CalendarUtil {
                 calendar[Calendar.MONTH] + 1,
                 calendar[Calendar.DATE]
             )}"
-            Day(key, mutableListOf(), !isInMonth)
+            Day(key, mutableListOf(), false)
         }
     }
 

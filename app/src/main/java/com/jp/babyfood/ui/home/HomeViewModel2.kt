@@ -17,20 +17,13 @@ import java.time.YearMonth
 import javax.inject.Inject
 
 
-class HomeViewModel @Inject constructor(
+class HomeViewModel2 @Inject constructor(
     private val foodRepository: FoodRepository
 ) : BaseViewModel(), HomePagerScrollDispatcher.OnFirstPage {
 
     companion object {
         const val INSERTED_POSITION = 0
     }
-
-    private val _months = MutableLiveData<MutableMap<YearMonth, List<Day>>>(mutableMapOf())
-    val months: LiveData<MutableMap<YearMonth, List<Day>>> = _months
-
-    private val _selectedMonth = MutableLiveData<YearMonth>(YearMonth.now())
-    val selectedMonth = _selectedMonth
-
 
     private val _yearMonths = MutableLiveData<MutableList<YearMonth>>().apply {
         val prevYearMonth = YearMonth.now().minusMonths(1)
@@ -53,20 +46,12 @@ class HomeViewModel @Inject constructor(
     val openCalendarDetailEvent: LiveData<Event<Day>> = _openCalendarDetailEvent
 
     init {
-//        _onUpdateSavedDays.addSource(yearMonths) {
-//            loadDays(CalendarUtil.createDefaultDays(it))
-//        }
-    }
-
-    fun updateMonth() {
-        _months.value?.apply {
-            put(selectedMonth.value!!, CalendarUtil.createYearMonth(selectedMonth.value!!))
-            _months.notifyDataChange()
+        _onUpdateSavedDays.addSource(yearMonths) {
+            loadDays(CalendarUtil.createDefaultDays(it))
         }
     }
 
     override fun updateMonths() {
-
         _yearMonths.value?.let {
             val prevYearMonth = it[0].minusMonths(1)
             if (it.contains(prevYearMonth)) {
