@@ -53,6 +53,7 @@ ext {
     materialVersion = '1.1.0'
     daggerVersion = '2.24'
     retrofitVersion = '2.8.0'
+    loggerVersion = '2.2.0'
     rx = [
             kotlin : '2.0.0',
             android: '2.0.2'
