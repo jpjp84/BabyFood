@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jp.babyfood.databinding.RowCalendarPageBinding
-import com.orhanobut.logger.Logger
 import java.time.YearMonth
 
 class HomeCalendarPageAdapter(private val viewModel: HomeViewModel) :
@@ -31,7 +30,6 @@ class HomeCalendarPageAdapter(private val viewModel: HomeViewModel) :
         private lateinit var adapter: CalendarAdapter
 
         fun bind(viewModel: HomeViewModel, yearMonth: YearMonth) {
-            Logger.d("year month : $yearMonth, ${viewModel.yearMonthMap.value?.get(yearMonth)}")
             binding.viewModel = viewModel
             binding.currentMonth = yearMonth
             adapter = CalendarAdapter(viewModel)
@@ -60,7 +58,6 @@ class MonthDiffCallback : DiffUtil.ItemCallback<YearMonth>() {
     }
 
     override fun areContentsTheSame(oldItem: YearMonth, newItem: YearMonth): Boolean {
-        Logger.d("${oldItem.year} ${oldItem.month} -> ${newItem.year} ${newItem.month}")
         return oldItem == newItem
     }
 }
