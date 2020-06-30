@@ -36,7 +36,7 @@ object CalendarUtil {
                 calendar[Calendar.MONTH] + 1,
                 calendar[Calendar.DATE]
             )}"
-            Day(key, mutableListOf(), false)
+            Day(key, mutableListOf(), isInMonth)
         }
     }
 
