@@ -21,14 +21,14 @@ import java.time.YearMonth
 
 
 @BindingAdapter("bind_page")
-fun bindPage(recyclerView: RecyclerView, months: List<YearMonth>?) {
-    (recyclerView.adapter as HomeCalendarPageAdapter?)?.submitList(months!!)
+fun bindPage(recyclerView: RecyclerView, months: Set<YearMonth>?) {
+    (recyclerView.adapter as HomeCalendarPageAdapter?)?.submitList(months?.toMutableList())
 }
 
 @BindingAdapter("bind_items")
 fun bindItems(recyclerView: RecyclerView, days: List<Day>?) {
     days?.let {
-        (recyclerView.adapter as CalendarAdapter?)?.submitList(it.toMutableList())
+        (recyclerView.adapter as CalendarAdapter?)?.submitList(it)
     }
 }
 
@@ -73,5 +73,5 @@ fun setTextWatcher(editText: AutoCompleteTextView, textWatcher: TextWatcher) {
 
 @BindingAdapter("visible")
 fun setVisible(view: View, visible: Boolean) {
-    view.visibility = if(visible) View.VISIBLE else View.GONE
+    view.visibility = if (visible) View.VISIBLE else View.GONE
 }

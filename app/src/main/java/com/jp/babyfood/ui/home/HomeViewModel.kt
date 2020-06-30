@@ -1,6 +1,5 @@
 package com.jp.babyfood.ui.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,29 +13,40 @@ import com.jp.babyfood.util.dispatchers.HomePagerScrollDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.time.YearMonth
+import java.util.*
 import javax.inject.Inject
 
 
 class HomeViewModel @Inject constructor(
     private val foodRepository: FoodRepository
-) : BaseViewModel(), HomePagerScrollDispatcher.OnFirstPage {
+) : BaseViewModel(), HomePagerScrollDispatcher.OnChangePage {
 
     companion object {
         const val INSERTED_POSITION = 0
     }
 
-    private val _months = MutableLiveData<MutableMap<YearMonth, List<Day>>>(mutableMapOf())
-    val months: LiveData<MutableMap<YearMonth, List<Day>>> = _months
-
     private val _selectedMonth = MutableLiveData<YearMonth>(YearMonth.now())
-    val selectedMonth = _selectedMonth
+    val selectedMonth: LiveData<YearMonth> = _selectedMonth
 
+    private val _yearMonthMap = MutableLiveData<SortedMap<YearMonth, List<Day>>>().apply {
+        val prevYearMonth = YearMonth.now().minusMonths(1)
+        val currentYearMonth = YearMonth.now()
+        val afterYearMonth = YearMonth.now().plusMonths(1)
+
+        value = linkedMapOf(
+            prevYearMonth to CalendarUtil.createYearMonth(prevYearMonth),
+            currentYearMonth to CalendarUtil.createYearMonth(currentYearMonth),
+            afterYearMonth to CalendarUtil.createYearMonth(afterYearMonth)
+        ).toSortedMap()
+    }
+    val yearMonthMap: LiveData<SortedMap<YearMonth, List<Day>>> = _yearMonthMap
 
     private val _yearMonths = MutableLiveData<MutableList<YearMonth>>().apply {
         val prevYearMonth = YearMonth.now().minusMonths(1)
         val currentYearMonth = YearMonth.now()
+        val afterYearMonth = YearMonth.now().plusMonths(1)
 
-        value = mutableListOf(prevYearMonth, currentYearMonth)
+        value = mutableListOf(prevYearMonth, currentYearMonth, afterYearMonth)
     }
     val yearMonths: LiveData<MutableList<YearMonth>> = _yearMonths
 
@@ -47,35 +57,40 @@ class HomeViewModel @Inject constructor(
     val onUpdateSavedDays = _onUpdateSavedDays
 
     private val _insertedNewPage = MutableLiveData<Event<Int>>()
-    val insertedNewPage = _insertedNewPage
+    val addNewPage = _insertedNewPage
 
     private val _openCalendarDetailEvent = MutableLiveData<Event<Day>>()
     val openCalendarDetailEvent: LiveData<Event<Day>> = _openCalendarDetailEvent
 
-    init {
-//        _onUpdateSavedDays.addSource(yearMonths) {
-//            loadDays(CalendarUtil.createDefaultDays(it))
-//        }
-    }
+    private val _openSelectMonthDialog = MutableLiveData<Event<Boolean>>()
+    val openSelectMonthDialog: LiveData<Event<Boolean>> = _openSelectMonthDialog
 
-    fun updateMonth() {
-        _months.value?.apply {
-            put(selectedMonth.value!!, CalendarUtil.createYearMonth(selectedMonth.value!!))
-            _months.notifyDataChange()
+    override fun onChangePage(position: Int) {
+        _yearMonthMap.value?.let {
+            _selectedMonth.value = it.keys.toList()[position]
         }
     }
-
-    override fun updateMonths() {
-
-        _yearMonths.value?.let {
-            val prevYearMonth = it[0].minusMonths(1)
+    override fun onFirstPage() {
+        _yearMonthMap.value?.let {
+            val prevYearMonth = it.keys.first().minusMonths(1)
             if (it.contains(prevYearMonth)) {
                 return
             }
 
-            it.add(INSERTED_POSITION, prevYearMonth)
+            it[prevYearMonth] = prevYearMonth?.let { it1 -> CalendarUtil.createYearMonth(it1) }
             _insertedNewPage.value = Event(INSERTED_POSITION)
-            _yearMonths.notifyDataChange()
+        }
+    }
+
+    override fun onLastPage() {
+        _yearMonthMap.value?.let {
+            val nextYearMonth = it.keys.last().plusMonths(1)
+            if (it.contains(nextYearMonth)) {
+                return
+            }
+
+            it[nextYearMonth] = nextYearMonth?.let { it1 -> CalendarUtil.createYearMonth(it1) }
+            _insertedNewPage.value = Event(it.size - 1)
         }
     }
 
@@ -86,13 +101,13 @@ class HomeViewModel @Inject constructor(
         }
 
     private fun getDaysByYearMonth(yearMonth: YearMonth) {
-        addDisposable(
-            foodRepository.getDailyFoods(yearMonth, false)
-                .subscribe(
-                    { replaceNewDays(yearMonth, it) },
-                    { t -> Log.e("BF_TAG", "Throwable : ", t) }
-                )
-        )
+//        addDisposable(
+//            foodRepository.getDailyFoods(yearMonth, false)
+//                .subscribe(
+//                    { replaceNewDays(yearMonth, it) },
+//                    { t -> Log.e("BF_TAG", "Throwable : ", t) }
+//                )
+//        )
     }
 
     private fun replaceNewDays(yearMonth: YearMonth, updatedDays: Days) {
@@ -101,6 +116,10 @@ class HomeViewModel @Inject constructor(
             _daysByYearMonth.value?.set(yearMonth, it)
             _onUpdateSavedDays.value = Event(Pair(yearMonths.value!!.indexOf(yearMonth), it))
         }
+    }
+
+    fun openSelectMonthDialog() {
+        _openSelectMonthDialog.value = Event(true)
     }
 
     fun openCalendarDetail(day: Day) {

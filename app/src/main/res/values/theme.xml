@@ -3,15 +3,20 @@
     <style name="BaseTheme" parent="Theme.MaterialComponents.Light.DarkActionBar" />
 
     <!-- Text -->
-    <style name="BaseTheme.PrimaryText">
-        <item name="android:textColor">@color/primaryTextColor</item>
+    <style name="BaseTheme.Text">
+        <item name="android:textColor">@color/secondaryColor</item>
     </style>
 
     <style name="BaseTheme.DisableText">
         <item name="android:textColor">@color/primaryDisableTextColor</item>
     </style>
 
-    <style name="BaseTheme.PrimaryText.15">
+    <style name="BaseTheme.Text.Title">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="BaseTheme.Text.15">
         <item name="android:textSize">15sp</item>
     </style>
 

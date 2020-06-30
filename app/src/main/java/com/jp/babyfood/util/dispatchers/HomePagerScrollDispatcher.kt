@@ -10,15 +10,40 @@ class HomePagerScrollDispatcher {
         this.scrolledPosition = scrolledPosition
     }
 
-    fun onScrollStateChanged(newState: Int, viewModel: OnFirstPage) {
-        if (newState != RecyclerView.SCROLL_STATE_IDLE || scrolledPosition != 0) {
+    fun onScrollStateChanged(
+        newState: Int,
+        viewModel: OnChangePage,
+        itemCount: Int
+    ) {
+
+        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+            viewModel.onChangePage(scrolledPosition)
+        }
+
+        if (newState == RecyclerView.SCROLL_STATE_IDLE && scrolledPosition == 0) {
+            viewModel.onFirstPage()
             return
         }
 
-        viewModel.updateMonths()
+        if (newState == RecyclerView.SCROLL_STATE_IDLE && scrolledPosition == itemCount - 1) {
+            viewModel.onLastPage()
+            return
+        }
     }
 
-    interface OnFirstPage {
-        fun updateMonths()
+    interface OnChangePage {
+        fun onFirstPage() {
+            willUpdateEdgePage(true)
+        }
+
+        fun onLastPage() {
+            willUpdateEdgePage(false)
+        }
+
+        fun onChangePage(position: Int) {
+
+        }
+
+        fun willUpdateEdgePage(isFirst: Boolean) {}
     }
 }

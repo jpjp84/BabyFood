@@ -23,10 +23,6 @@ class CalendarAdapter(private val viewModel: HomeViewModel) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(viewModel: HomeViewModel, items: Day) {
-            if (!items.disable) {
-                return
-            }
-
             binding.viewModel = viewModel
             binding.day = items
         }

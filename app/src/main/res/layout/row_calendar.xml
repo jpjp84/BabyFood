@@ -19,11 +19,11 @@
         android:layout_height="wrap_content"
         android:onClick="@{ (view) -> day.date == null ? void : viewModel.openCalendarDetail(day)}"
         android:orientation="vertical"
-        android:padding="@dimen/padding_small">
+        android:padding="@dimen/calendar_item">
 
         <TextView
             android:id="@+id/calendar_day"
-            style="@style/BaseTheme.PrimaryText.15"
+            style="@style/BaseTheme.Text.15"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

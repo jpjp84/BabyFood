@@ -10,6 +10,7 @@
     <dimen name="default_padding">20dp</dimen>
     <dimen name="padding_small">10dp</dimen>
     <dimen name="padding_button">15dp</dimen>
+    <dimen name="calendar_item">10dp</dimen>
 
     <!-- Corner -->
     <dimen name="default_corner">5dp</dimen>
