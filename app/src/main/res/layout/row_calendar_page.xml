@@ -15,10 +15,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendar_page_view"
-        android:background="@color/primaryLightColor"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:bind_items="@{viewModel.daysByYearMonth[currentMonth]}"
+        android:layout_height="wrap_content"
+        app:bind_items="@{viewModel.yearMonthMap.get(currentMonth)}"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="7" />
 </layout>

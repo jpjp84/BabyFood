@@ -2,7 +2,6 @@ package com.jp.babyfood.ui.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -29,8 +28,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setCalendarPager()
         setNavigation()
+        setCalendarPager()
     }
 
     private fun setCalendarPager() {
@@ -54,8 +53,9 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
-
-                    scrollDispatcher.onScrollStateChanged(newState, viewModel)
+                    recyclerView.adapter?.itemCount?.let {
+                        scrollDispatcher.onScrollStateChanged(newState, viewModel, it)
+                    }
                 }
             })
             adapter = HomeCalendarPageAdapter(viewModel)
@@ -70,22 +70,21 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             openCalendarDetail(it)
         })
 
-        viewModel.yearMonths.observe(viewLifecycleOwner, Observer {
-            (viewBinding.homeCalendarPager.adapter as HomeCalendarPageAdapter).submitList(it)
+        viewModel.addNewPage.observe(viewLifecycleOwner, EventObserver {
+            (viewBinding.homeCalendarPager.adapter as HomeCalendarPageAdapter).submitList(
+                viewModel.yearMonthMap.value?.keys,
+                it
+            )
         })
 
-        viewModel.insertedNewPage.observe(viewLifecycleOwner, EventObserver {
-            (viewBinding.homeCalendarPager.adapter as HomeCalendarPageAdapter).notifyItemInserted(it)
-        })
-
-        viewModel.onUpdateSavedDays.observe(viewLifecycleOwner, EventObserver {
-            val viewHolder =
-                viewBinding.homeCalendarPager.findViewHolderForAdapterPosition(it.first)
-
-            if (viewHolder is HomeCalendarPageAdapter.CalendarPageViewHolder) {
-                viewHolder.getChildAdapter().submitList(it.second)
-            }
-        })
+//        viewModel.onUpdateSavedDays.observe(viewLifecycleOwner, EventObserver {
+//            val viewHolder =
+//                viewBinding.homeCalendarPager.findViewHolderForAdapterPosition(it.first)
+//
+//            if (viewHolder is HomeCalendarPageAdapter.CalendarPageViewHolder) {
+//                viewHolder.getChildAdapter().submitList(it.second)
+//            }
+//        })
     }
 
     private fun openCalendarDetail(item: Day) {
