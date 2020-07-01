@@ -14,5 +14,6 @@
 
     <!-- Corner -->
     <dimen name="default_corner">5dp</dimen>
+    <dimen name="backdrop_corner">20dp</dimen>
 
 </resources>

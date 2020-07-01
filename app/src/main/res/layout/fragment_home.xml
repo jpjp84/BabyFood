@@ -14,116 +14,146 @@
             type="com.jp.babyfood.ui.home.HomeViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/primaryColor"
-        android:padding="@dimen/padding_small">
+        android:background="@color/primaryColor">
 
-        <TextView
-            android:id="@+id/calendar_navigation"
-            style="@style/BaseTheme.Text.Title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="@{() -> viewModel.openSelectMonthDialog()}"
-            android:padding="@dimen/default_padding"
-            android:text="@{viewModel.selectedMonth.month + `  ` + viewModel.selectedMonth.year}"
-            app:layout_constraintBottom_toTopOf="@id/home_week_layout"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0"
-            app:layout_constraintVertical_chainStyle="packed" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/padding_small">
+
+            <TextView
+                android:id="@+id/calendar_navigation"
+                style="@style/BaseTheme.Text.Title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{() -> viewModel.openSelectMonthDialog()}"
+                android:padding="@dimen/default_padding"
+                android:text="@{viewModel.selectedMonth.month + `  ` + viewModel.selectedMonth.year}"
+                app:layout_constraintBottom_toTopOf="@id/home_week_layout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <LinearLayout
+                android:id="@+id/home_week_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="7"
+                app:layout_constraintBottom_toTopOf="@id/home_calendar_pager"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/calendar_navigation"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintVertical_chainStyle="packed">
+
+                <TextView
+                    style="@style/BaseTheme.Text.15"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/calendar_item"
+                    android:text="@string/sun" />
+
+                <TextView
+                    style="@style/BaseTheme.Text.15"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/calendar_item"
+                    android:text="@string/mon" />
+
+                <TextView
+                    style="@style/BaseTheme.Text.15"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/calendar_item"
+                    android:text="@string/thu" />
+
+                <TextView
+                    style="@style/BaseTheme.Text.15"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/calendar_item"
+                    android:text="@string/wed" />
+
+                <TextView
+                    style="@style/BaseTheme.Text.15"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/calendar_item"
+                    android:text="@string/thu" />
+
+                <TextView
+                    style="@style/BaseTheme.Text.15"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/calendar_item"
+                    android:text="@string/fri" />
+
+                <TextView
+                    style="@style/BaseTheme.Text.15"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/calendar_item"
+                    android:text="@string/sat" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/home_calendar_pager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#123123"
+                android:orientation="horizontal"
+                app:bind_page="@{viewModel.yearMonthMap.keySet()}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constrainedHeight="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/home_week_layout"
+                app:layout_constraintVertical_weight="1" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
-            android:id="@+id/home_week_layout"
+            android:id="@+id/backdrop_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="7"
-            app:layout_constraintBottom_toTopOf="@id/home_calendar_pager"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/calendar_navigation"
-            app:layout_constraintVertical_bias="0"
-            app:layout_constraintVertical_chainStyle="packed">
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_backdrop"
+            android:elevation="20dp"
+            app:behavior_peekHeight="56dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-            <TextView
-                style="@style/BaseTheme.Text.15"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="@dimen/calendar_item"
-                android:text="@string/sun" />
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:elevation="4dp">
 
-            <TextView
-                style="@style/BaseTheme.Text.15"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="@dimen/calendar_item"
-                android:text="@string/mon" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0 items(s)"/>
 
-            <TextView
-                style="@style/BaseTheme.Text.15"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="@dimen/calendar_item"
-                android:text="@string/thu" />
-
-            <TextView
-                style="@style/BaseTheme.Text.15"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="@dimen/calendar_item"
-                android:text="@string/wed" />
-
-            <TextView
-                style="@style/BaseTheme.Text.15"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="@dimen/calendar_item"
-                android:text="@string/thu" />
-
-            <TextView
-                style="@style/BaseTheme.Text.15"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="@dimen/calendar_item"
-                android:text="@string/fri" />
-
-            <TextView
-                style="@style/BaseTheme.Text.15"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="@dimen/calendar_item"
-                android:text="@string/sat" />
+            </LinearLayout>
         </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/home_calendar_pager"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:bind_page="@{viewModel.yearMonthMap.keySet()}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constrainedHeight="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/home_week_layout"
-            app:layout_constraintVertical_weight="1" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
