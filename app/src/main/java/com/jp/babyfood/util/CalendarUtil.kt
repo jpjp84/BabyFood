@@ -11,8 +11,32 @@ typealias DaysByYearMonths = MutableMap<YearMonth, Days>
 
 object CalendarUtil {
 
-    fun createYearMonth(year: String, month: String): List<Day> {
-        return createYearMonth(year.toInt(), month.toInt())
+    fun createSimpleYearMonth(yearMonth: YearMonth): List<Day> {
+        return createSimpleYearMonth(yearMonth.year, yearMonth.monthValue)
+    }
+
+    private fun createSimpleYearMonth(
+        year: Int = YearMonth.now().year,
+        month: Int = YearMonth.now().monthValue
+    ): List<Day> {
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.set(year, month - 1, 1, 0, 0, 0)
+        calendar.add(Calendar.DAY_OF_MONTH, Calendar.SUNDAY - calendar.get(Calendar.DAY_OF_WEEK))
+        val days = mutableListOf<Day>()
+
+        while (calendar.get(Calendar.MONTH) <= month - 1) {
+            val isInMonth = month - 1 == calendar[Calendar.MONTH] && year == calendar[Calendar.YEAR]
+
+            val key = "${calendar[Calendar.YEAR]}${String.format(
+                "%02d%02d",
+                calendar[Calendar.MONTH] + 1,
+                calendar[Calendar.DATE]
+            )}"
+            days.add(Day(key, mutableListOf(), isInMonth))
+            calendar.add(Calendar.DATE, 1)
+        }
+
+        return days.toList()
     }
 
     fun createYearMonth(yearMonth: YearMonth): List<Day> {

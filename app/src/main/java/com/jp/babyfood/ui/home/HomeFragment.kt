@@ -2,11 +2,9 @@ package com.jp.babyfood.ui.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.jp.babyfood.R
 import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.databinding.FragmentHomeBinding
@@ -32,7 +30,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
         setNavigation()
         setCalendarPager()
-        setBackdrop()
     }
 
     private fun setCalendarPager() {
@@ -84,24 +81,5 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     private fun openCalendarDetail(item: Day) {
         val action = HomeFragmentDirections.actionHomeFragmentToDayListFragment(item)
         findNavController().navigate(action)
-    }
-
-    private fun setBackdrop() {
-        val sheetBehavior = BottomSheetBehavior.from(viewBinding.backdropLayout)
-        sheetBehavior.isFitToContents = false
-        sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-        viewModel.selectedMonth.observe(viewLifecycleOwner, Observer {
-            val location = intArrayOf(0, 0)
-            viewBinding.homeCalendarPager.getLocationOnScreen(location)
-
-            if (location[1] == 0) {
-                return@Observer
-            }
-
-            val anchorViewBottom =
-                (location[1] + viewBinding.homeCalendarPager.height).toFloat() / resources.displayMetrics.heightPixels
-
-            sheetBehavior.halfExpandedRatio = 1 - anchorViewBottom
-        })
     }
 }

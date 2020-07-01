@@ -22,7 +22,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:padding="@dimen/padding_small">
 
             <TextView
@@ -137,21 +137,23 @@
             android:layout_height="match_parent"
             android:background="@drawable/bg_backdrop"
             android:elevation="20dp"
+            app:anchorTarget="@id/home_calendar_pager"
             app:behavior_peekHeight="56dp"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+            app:behavior_halfExpandedRatio="0.4"
+            app:layout_behavior=".util.behavior.AnchorBackdropBehavior">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:clickable="true"
-                android:elevation="4dp">
+                android:elevation="4dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="0 items(s)"/>
+                    android:text="0 items(s)" />
 
             </LinearLayout>
         </LinearLayout>
