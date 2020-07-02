@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -14,20 +15,26 @@
             type="com.jp.babyfood.ui.home.HomeViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{ (view) -> day.date == null ? void : viewModel.openCalendarDetail(day)}"
+        android:background="@{day.select ? @drawable/bg_selected_day : null}"
+        android:gravity="center"
+        android:onClick="@{ (view) -> day.date == null ? void : viewModel.setSelectedDay(day)}"
         android:orientation="vertical"
-        android:padding="@dimen/calendar_item">
+        android:layout_margin="@dimen/calendar_item">
 
         <TextView
             android:id="@+id/calendar_day"
             style="@style/BaseTheme.Text.15"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:gravity="center"
-            android:text="@{day == null ? `` :String.valueOf(day.getDateToClass())}" />
+            android:text="@{day == null ? `` :String.valueOf(day.getDateToClass())}"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

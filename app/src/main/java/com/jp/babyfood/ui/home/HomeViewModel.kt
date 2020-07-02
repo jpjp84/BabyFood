@@ -1,7 +1,6 @@
 package com.jp.babyfood.ui.home
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jp.babyfood.data.entity.Day
@@ -53,23 +52,18 @@ class HomeViewModel @Inject constructor(
     private val _daysByYearMonth = MutableLiveData<MutableMap<YearMonth, Days>>(mutableMapOf())
     val daysByYearMonth: LiveData<MutableMap<YearMonth, Days>> = _daysByYearMonth
 
-    private val _onUpdateSavedDays = MediatorLiveData<Event<Pair<Int, Days>>>()
-    val onUpdateSavedDays = _onUpdateSavedDays
-
     private val _insertedNewPage = MutableLiveData<Event<Int>>()
     val addNewPage = _insertedNewPage
 
-    private val _openCalendarDetailEvent = MutableLiveData<Event<Day>>()
-    val openCalendarDetailEvent: LiveData<Event<Day>> = _openCalendarDetailEvent
-
-    private val _openSelectMonthDialog = MutableLiveData<Event<Boolean>>()
-    val openSelectMonthDialog: LiveData<Event<Boolean>> = _openSelectMonthDialog
+    private val _selectedDay = MutableLiveData<Day?>()
+    val selectedDay: LiveData<Day?> = _selectedDay
 
     override fun onChangePage(position: Int) {
         _yearMonthMap.value?.let {
             _selectedMonth.value = it.keys.toList()[position]
         }
     }
+
     override fun onFirstPage() {
         _yearMonthMap.value?.let {
             val prevYearMonth = it.keys.first().minusMonths(1)
@@ -114,15 +108,14 @@ class HomeViewModel @Inject constructor(
         val currentMonths = _daysByYearMonth.value?.get(yearMonth)
         currentMonths?.merge(updatedDays)?.let {
             _daysByYearMonth.value?.set(yearMonth, it)
-            _onUpdateSavedDays.value = Event(Pair(yearMonths.value!!.indexOf(yearMonth), it))
+//            _onUpdateSavedDays.value = Event(Pair(yearMonths.value!!.indexOf(yearMonth), it))
         }
     }
 
-    fun openSelectMonthDialog() {
-        _openSelectMonthDialog.value = Event(true)
-    }
+    fun setSelectedDay(day: Day?) {
+        _selectedDay.value?.let { it.select = false }
 
-    fun openCalendarDetail(day: Day) {
-        _openCalendarDetailEvent.value = Event(day)
+        day?.select = true
+        _selectedDay.value = day
     }
 }

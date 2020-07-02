@@ -68,10 +68,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     }
 
     private fun setNavigation() {
-        viewModel.openCalendarDetailEvent.observe(viewLifecycleOwner, EventObserver {
-            openCalendarDetail(it)
-        })
-
         viewModel.addNewPage.observe(viewLifecycleOwner, EventObserver {
             (viewBinding.homeCalendarPager.adapter as HomeCalendarPageAdapter).submitList(
                 viewModel.yearMonthMap.value?.keys,
@@ -81,6 +77,10 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
         viewModel.selectedMonth.observe(viewLifecycleOwner, Observer {
             (activity as AppCompatActivity).supportActionBar?.title = "${it.month} ${it.year}"
+        })
+
+        viewModel.selectedDay.observe(viewLifecycleOwner, Observer {
+            TODO("backdrop content fill")
         })
     }
 
