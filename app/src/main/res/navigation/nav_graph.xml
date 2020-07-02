@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.jp.babyfood.ui.home.HomeFragment"
-        android:label="Baby Food">
+        android:label="">
 
         <action
             android:id="@+id/action_homeFragment_to_dayListFragment"

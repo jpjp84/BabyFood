@@ -8,8 +8,4 @@
     <declare-styleable name="GridRadioGroup">
         <attr name="checkedButton" format="reference" />
     </declare-styleable>
-
-    <declare-styleable name="AnchorBackdropBehavior">
-        <attr name="anchorTarget" format="reference" />
-    </declare-styleable>
 </resources>

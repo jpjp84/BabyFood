@@ -2,6 +2,8 @@ package com.jp.babyfood.ui.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -28,8 +30,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setNavigation()
         setCalendarPager()
+        setNavigation()
     }
 
     private fun setCalendarPager() {
@@ -75,6 +77,10 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
                 viewModel.yearMonthMap.value?.keys,
                 it
             )
+        })
+
+        viewModel.selectedMonth.observe(viewLifecycleOwner, Observer {
+            (activity as AppCompatActivity).supportActionBar?.title = "${it.month} ${it.year}"
         })
     }
 

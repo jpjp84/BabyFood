@@ -25,21 +25,6 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/padding_small">
 
-            <TextView
-                android:id="@+id/calendar_navigation"
-                style="@style/BaseTheme.Text.Title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="@{() -> viewModel.openSelectMonthDialog()}"
-                android:padding="@dimen/default_padding"
-                android:text="@{viewModel.selectedMonth.month + `  ` + viewModel.selectedMonth.year}"
-                app:layout_constraintBottom_toTopOf="@id/home_week_layout"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0"
-                app:layout_constraintVertical_chainStyle="packed" />
-
             <LinearLayout
                 android:id="@+id/home_week_layout"
                 android:layout_width="match_parent"
@@ -48,7 +33,7 @@
                 android:weightSum="7"
                 app:layout_constraintBottom_toTopOf="@id/home_calendar_pager"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/calendar_navigation"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0"
                 app:layout_constraintVertical_chainStyle="packed">
 
@@ -120,7 +105,6 @@
                 android:id="@+id/home_calendar_pager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#123123"
                 android:orientation="horizontal"
                 app:bind_page="@{viewModel.yearMonthMap.keySet()}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -137,10 +121,10 @@
             android:layout_height="match_parent"
             android:background="@drawable/bg_backdrop"
             android:elevation="20dp"
-            app:anchorTarget="@id/home_calendar_pager"
-            app:behavior_peekHeight="56dp"
+            app:behavior_fitToContents="false"
             app:behavior_halfExpandedRatio="0.4"
-            app:layout_behavior=".util.behavior.AnchorBackdropBehavior">
+            app:behavior_peekHeight="56dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
             <LinearLayout
                 android:layout_width="match_parent"
