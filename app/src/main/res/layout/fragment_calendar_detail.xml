@@ -70,12 +70,10 @@
             android:inputType="text"
             android:padding="@dimen/default_padding"
             android:singleLine="true"
-            android:textColor="@color/primaryTextLightColor"
-            android:textColorHint="@color/secondaryTextLightColor"
             android:textSize="@dimen/text_title"
             app:collapsedTarget="@id/toolbar_holder"
             app:collapsedTextSize="@dimen/text_system_default"
-            app:layout_behavior=".util.CollapsingEditTextBehavior" />
+            app:layout_behavior=".util.behavior.CollapsingEditTextBehavior" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

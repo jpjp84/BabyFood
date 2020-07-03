@@ -27,7 +27,7 @@ class CalendarDetailFragment :
     override fun getViewLayoutRes(): Int = R.layout.fragment_calendar_detail
 
     override fun getTheme(): Int {
-        return R.style.AppTheme_Popup
+        return R.style.Popup
     }
 
     override fun onCreateView(

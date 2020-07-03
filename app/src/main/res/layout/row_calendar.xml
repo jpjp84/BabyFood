@@ -26,7 +26,7 @@
 
         <TextView
             android:id="@+id/calendar_day"
-            style="@style/BaseTheme.Text.15"
+            style="@style/Text"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:gravity="center"

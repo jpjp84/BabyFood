@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Base" parent="AppTheme.NoActionBar">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="colorAccent">@color/accentColor</item>
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+        <item name="colorDisableText">@color/primaryDisableTextColor</item>
+    </style>
+
+    <style name="Theme.Light" parent="AppTheme.NoActionBar">
+        <item name="colorPrimary">@color/primaryColor_LightTheme</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor_LightTheme</item>
+        <item name="colorSecondary">@color/secondaryColor_LightTheme</item>
+        <item name="colorAccent">@color/accentColor</item>
+        <item name="android:textColorPrimary">@color/primaryTextColor_LightTheme</item>
+        <item name="colorDisableText">@color/primaryDisableTextColor_LightTheme</item>
+    </style>
+</resources>

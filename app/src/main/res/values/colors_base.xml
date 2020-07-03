@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- base theme -->
+    <color name="primaryColor">#81bcd9</color>
+    <color name="primaryLightColor">#b3eeff</color>
+    <color name="primaryDarkColor">#508ca7</color>
+
+    <color name="secondaryColor">#fbe9e7</color>
+    <color name="secondaryLightColor">#ffffff</color>
+    <color name="secondaryDarkColor">#c8b7b5</color>
+
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#000000</color>
+
+    <color name="primaryDisableTextColor">#55000000</color>
+
+</resources>

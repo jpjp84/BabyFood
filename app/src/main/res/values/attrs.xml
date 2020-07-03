@@ -8,4 +8,7 @@
     <declare-styleable name="GridRadioGroup">
         <attr name="checkedButton" format="reference" />
     </declare-styleable>
+
+    <attr name="colorDisableText" format="reference" />
+    <attr name="NoActionBar" format="reference" />
 </resources>

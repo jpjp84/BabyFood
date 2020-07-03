@@ -80,7 +80,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         })
 
         viewModel.selectedDay.observe(viewLifecycleOwner, Observer {
-            TODO("backdrop content fill")
+//            TODO("backdrop content fill")
         })
     }
 
