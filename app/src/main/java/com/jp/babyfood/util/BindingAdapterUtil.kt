@@ -75,3 +75,8 @@ fun setTextWatcher(editText: AutoCompleteTextView, textWatcher: TextWatcher) {
 fun setVisible(view: View, visible: Boolean) {
     view.visibility = if (visible) View.VISIBLE else View.GONE
 }
+
+@BindingAdapter("localeMMDDByDay")
+fun localeMMDDByDay(view: TextView, day: Day) {
+    view.text = CalendarUtil.getLocaleMMDDByDay(view.context, day)
+}

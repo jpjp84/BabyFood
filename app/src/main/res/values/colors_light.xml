@@ -14,4 +14,5 @@
 
     <color name="primaryDisableTextColor_LightTheme">#55000000</color>
 
+    <color name="backdropTitleColor_LightTheme">#202F51</color>
 </resources>

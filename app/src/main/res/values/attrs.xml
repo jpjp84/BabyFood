@@ -10,5 +10,9 @@
     </declare-styleable>
 
     <attr name="colorDisableText" format="reference" />
-    <attr name="NoActionBar" format="reference" />
+
+    <declare-styleable name="Backdrop">
+        <attr name="backdropTitleColor" format="reference" />
+    </declare-styleable>
+
 </resources>

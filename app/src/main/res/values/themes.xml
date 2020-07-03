@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/accentColor</item>
         <item name="android:textColorPrimary">@color/primaryTextColor</item>
         <item name="colorDisableText">@color/primaryDisableTextColor</item>
+        <item name="backdropTitleColor">@color/backdropTitleColor</item>
     </style>
 
     <style name="Theme.Light" parent="AppTheme.NoActionBar">
@@ -17,5 +18,6 @@
         <item name="colorAccent">@color/accentColor</item>
         <item name="android:textColorPrimary">@color/primaryTextColor_LightTheme</item>
         <item name="colorDisableText">@color/primaryDisableTextColor_LightTheme</item>
+        <item name="backdropTitleColor">@color/backdropTitleColor_LightTheme</item>
     </style>
 </resources>

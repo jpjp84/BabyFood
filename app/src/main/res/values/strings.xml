@@ -37,4 +37,6 @@
     <string name="fri">F</string>
     <string name="sat">S</string>
     <string name="remove">삭제</string>
+    <string name="date_mm_dd">%1$s월 %2$s일</string>
+    <string name="date_today">Today</string>
 </resources>

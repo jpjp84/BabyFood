@@ -7,9 +7,11 @@ import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.data.entity.Days
 import com.jp.babyfood.data.repository.FoodRepository
 import com.jp.babyfood.ui.base.BaseViewModel
-import com.jp.babyfood.util.*
+import com.jp.babyfood.util.CalendarUtil
+import com.jp.babyfood.util.DaysByYearMonths
+import com.jp.babyfood.util.Event
+import com.jp.babyfood.util.YearMonths
 import com.jp.babyfood.util.dispatchers.HomePagerScrollDispatcher
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.time.YearMonth
 import java.util.*
@@ -24,9 +26,6 @@ class HomeViewModel @Inject constructor(
         const val INSERTED_POSITION = 0
     }
 
-    private val _selectedMonth = MutableLiveData<YearMonth>(YearMonth.now())
-    val selectedMonth: LiveData<YearMonth> = _selectedMonth
-
     private val _yearMonthMap = MutableLiveData<SortedMap<YearMonth, List<Day>>>().apply {
         val prevYearMonth = YearMonth.now().minusMonths(1)
         val currentYearMonth = YearMonth.now()
@@ -40,23 +39,27 @@ class HomeViewModel @Inject constructor(
     }
     val yearMonthMap: LiveData<SortedMap<YearMonth, List<Day>>> = _yearMonthMap
 
-    private val _yearMonths = MutableLiveData<MutableList<YearMonth>>().apply {
-        val prevYearMonth = YearMonth.now().minusMonths(1)
-        val currentYearMonth = YearMonth.now()
-        val afterYearMonth = YearMonth.now().plusMonths(1)
-
-        value = mutableListOf(prevYearMonth, currentYearMonth, afterYearMonth)
-    }
-    val yearMonths: LiveData<MutableList<YearMonth>> = _yearMonths
-
-    private val _daysByYearMonth = MutableLiveData<MutableMap<YearMonth, Days>>(mutableMapOf())
-    val daysByYearMonth: LiveData<MutableMap<YearMonth, Days>> = _daysByYearMonth
-
     private val _insertedNewPage = MutableLiveData<Event<Int>>()
     val addNewPage = _insertedNewPage
 
+    private val _selectedMonth = MutableLiveData<YearMonth>(YearMonth.now())
+    val selectedMonth: LiveData<YearMonth> = _selectedMonth
+
     private val _selectedDay = MutableLiveData<Day?>()
     val selectedDay: LiveData<Day?> = _selectedDay
+
+    init {
+        initSelectedDay()
+    }
+
+    private fun initSelectedDay() {
+        _yearMonthMap.value?.get(YearMonth.now())
+            ?.filter { CalendarUtil.isCurrentDay(it) }
+            ?.map {
+                it.select = true
+                _selectedDay.value = it
+            }
+    }
 
     override fun onChangePage(position: Int) {
         _yearMonthMap.value?.let {
@@ -88,10 +91,17 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun setSelectedDay(day: Day?) {
+        _selectedDay.value?.let { it.select = false }
+
+        day?.select = true
+        _selectedDay.value = day
+    }
+
     private fun loadDays(getNewMonths: (DaysByYearMonths) -> YearMonths?) =
         viewModelScope.launch {
-            val getNewMonthsJob = async { daysByYearMonth.value?.let { getNewMonths(it) } }
-            getNewMonthsJob.await()?.apply { map { getDaysByYearMonth(it) } }
+//            val getNewMonthsJob = async { daysByYearMonth.value?.let { getNewMonths(it) } }
+//            getNewMonthsJob.await()?.apply { map { getDaysByYearMonth(it) } }
         }
 
     private fun getDaysByYearMonth(yearMonth: YearMonth) {
@@ -105,17 +115,10 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun replaceNewDays(yearMonth: YearMonth, updatedDays: Days) {
-        val currentMonths = _daysByYearMonth.value?.get(yearMonth)
-        currentMonths?.merge(updatedDays)?.let {
-            _daysByYearMonth.value?.set(yearMonth, it)
-//            _onUpdateSavedDays.value = Event(Pair(yearMonths.value!!.indexOf(yearMonth), it))
-        }
-    }
-
-    fun setSelectedDay(day: Day?) {
-        _selectedDay.value?.let { it.select = false }
-
-        day?.select = true
-        _selectedDay.value = day
+//        val currentMonths = _daysByYearMonth.value?.get(yearMonth)
+//        currentMonths?.merge(updatedDays)?.let {
+//            _daysByYearMonth.value?.set(yearMonth, it)
+////            _onUpdateSavedDays.value = Event(Pair(yearMonths.value!!.indexOf(yearMonth), it))
+//        }
     }
 }

@@ -33,12 +33,11 @@
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="DisableText">
+    <style name="Text.Disable">
         <item name="android:textColor">?attr/colorDisableText</item>
-        <item name="android:textSize">15sp</item>
     </style>
 
-    <style name="Backdrop">
-        <item name="android:textSize">15sp</item>
+    <style name="Text.Title.Backdrop">
+        <item name="android:textColor">?attr/backdropTitleColor</item>
     </style>
 </resources>
