@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph_home"
+    app:startDestination="@id/dayListFragment">
+
+    <fragment
+        android:id="@+id/dayListFragment"
+        android:name="com.jp.babyfood.ui.daylist.DayListFragment"
+        android:label="List">
+        <action
+            android:id="@+id/action_dayListFragment_to_calendarDetailFragment"
+            app:destination="@id/calendarDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/calendarDetailFragment"
+        android:name="com.jp.babyfood.ui.calendardetail.CalendarDetailFragment"
+        android:label="Add Day">
+    </fragment>
+
+    <argument
+        android:name="userMessage"
+        android:defaultValue="0" />
+</navigation>

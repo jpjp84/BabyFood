@@ -13,6 +13,7 @@
 
     <declare-styleable name="Backdrop">
         <attr name="backdropTitleColor" format="reference" />
+        <attr name="lockable" format="boolean" />
     </declare-styleable>
 
 </resources>

@@ -41,9 +41,6 @@
         <action
             android:id="@+id/action_dayListFragment_to_calendarDetailFragment"
             app:destination="@id/calendarDetailFragment" />
-        <argument
-            android:name="day"
-            app:argType="com.jp.babyfood.data.entity.Day" />
     </fragment>
 
     <dialog

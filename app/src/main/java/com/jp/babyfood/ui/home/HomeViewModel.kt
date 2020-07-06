@@ -48,6 +48,9 @@ class HomeViewModel @Inject constructor(
     private val _selectedDay = MutableLiveData<Day?>()
     val selectedDay: LiveData<Day?> = _selectedDay
 
+    private val _addNewFood = MutableLiveData<Event<Boolean>>()
+    val addNewFood = _addNewFood
+
     init {
         initSelectedDay()
     }
@@ -96,6 +99,9 @@ class HomeViewModel @Inject constructor(
 
         day?.select = true
         _selectedDay.value = day
+    }
+    fun onAddClick() {
+        _addNewFood.value = Event(true)
     }
 
     private fun loadDays(getNewMonths: (DaysByYearMonths) -> YearMonths?) =

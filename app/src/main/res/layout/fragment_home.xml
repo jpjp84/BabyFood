@@ -126,7 +126,8 @@
             app:behavior_fitToContents="false"
             app:behavior_halfExpandedRatio="0.4"
             app:behavior_peekHeight="56dp"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+            app:layout_behavior=".util.behavior.LockableBottomSheetBehavior"
+            app:lockable="true">
 
             <TextView
                 style="@style/Text.Title.Backdrop"
@@ -140,6 +141,22 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:localeMMDDByDay="@{viewModel.selectedDay}" />
 
+            <fragment
+                android:id="@+id/nav_host_fragment2"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:navGraph="@navigation/nav_graph_home" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:text="@string/add_food"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
