@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +14,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCa
 import com.jp.babyfood.R
 import com.jp.babyfood.databinding.FragmentHomeBinding
 import com.jp.babyfood.ui.base.BaseFragment
-import com.jp.babyfood.ui.daylist.DayListFragmentDirections
+import com.jp.babyfood.ui.calendardetail.CalendarDetailFragment
+import com.jp.babyfood.ui.daylist.DayListFragment
 import com.jp.babyfood.util.EventObserver
 import com.jp.babyfood.util.behavior.LockableBottomSheetBehavior
 import com.jp.babyfood.util.dispatchers.HomePagerScrollDispatcher
@@ -93,40 +94,46 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         })
 
         viewModel.addNewFood.observe(viewLifecycleOwner, EventObserver {
-
+            val behavior: LockableBottomSheetBehavior<ConstraintLayout> =
+                BottomSheetBehavior.from(viewBinding.backdropLayout) as LockableBottomSheetBehavior
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
         })
     }
 
     private fun openCalendarDetail() {
         val behavior: LockableBottomSheetBehavior<ConstraintLayout> =
             BottomSheetBehavior.from(viewBinding.backdropLayout) as LockableBottomSheetBehavior
-        behavior.addBottomSheetCallback(object: BottomSheetCallback() {
+
+        childFragmentManager.beginTransaction()
+            .replace(R.id.backdrop_fragment, DayListFragment())
+            .commit()
+
+        // Use the Kotlin extension in the fragment-ktx artifact
+        childFragmentManager.setFragmentResultListener("requestKey", viewLifecycleOwner) {key, bundle ->
+            val result = bundle.getString("bundleKey")
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+
+        behavior.addBottomSheetCallback(object : BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
 
             }
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_EXPANDED){
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     behavior.isLock = false
+                    childFragmentManager.beginTransaction()
+                        .replace(R.id.backdrop_fragment, CalendarDetailFragment())
+                        .commit()
                 }
                 if (newState == BottomSheetBehavior.STATE_HALF_EXPANDED) {
+                    childFragmentManager.beginTransaction()
+                        .replace(R.id.backdrop_fragment, DayListFragment())
+                        .commit()
                     behavior.isLock = true
-                    val action = DayListFragmentDirections.actionDayListFragmentToCalendarDetailFragment()
-                    Logger.d("${activity?.findNavController(R.id.nav_host_fragment2)} open")
-                    activity?.findNavController(R.id.nav_host_fragment2)?.popBackStack()
                     behavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
                 }
             }
         })
-
-        activity?.findNavController(R.id.nav_host_fragment2)
-            ?.addOnDestinationChangedListener { controller, destination, arguments ->
-                Logger.d("openCalender : $controller, $destination")
-                val behavior: LockableBottomSheetBehavior<ConstraintLayout> =
-                    BottomSheetBehavior.from(viewBinding.backdropLayout) as LockableBottomSheetBehavior
-                behavior.state = BottomSheetBehavior.STATE_EXPANDED
-
-                behavior.isLock = false
-            }
     }
 }

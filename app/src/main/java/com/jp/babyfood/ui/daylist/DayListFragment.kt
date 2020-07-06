@@ -2,13 +2,13 @@ package com.jp.babyfood.ui.daylist
 
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.findNavController
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import com.jp.babyfood.R
 import com.jp.babyfood.data.entity.Food
 import com.jp.babyfood.databinding.FragmentDaylistBinding
 import com.jp.babyfood.ui.base.BaseFragment
 import com.jp.babyfood.util.EventObserver
-import com.orhanobut.logger.Logger
 
 class DayListFragment : BaseFragment<DayListViewModel, FragmentDaylistBinding>() {
 
@@ -41,8 +41,6 @@ class DayListFragment : BaseFragment<DayListViewModel, FragmentDaylistBinding>()
     }
 
     private fun openCalendarDetail(item: Food?) {
-        val action = DayListFragmentDirections.actionDayListFragmentToCalendarDetailFragment()
-        Logger.d("${activity?.findNavController(R.id.nav_host_fragment2)} open")
-        activity?.findNavController(R.id.nav_host_fragment2)?.navigate(action)
+        setFragmentResult("requestKey", bundleOf("bundleKey" to "result"))
     }
 }
