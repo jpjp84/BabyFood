@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- light theme -->
+    <color name="primaryColor_LightTheme">#f8d193</color>
+    <color name="primaryLightColor_LightTheme">#ffffc4</color>
+    <color name="primaryDarkColor_LightTheme">#c4a064</color>
+
+    <color name="secondaryColor_LightTheme">#f2cbce</color>
+    <color name="secondaryLightColor_LightTheme">#fffeff</color>
+    <color name="secondaryDarkColor_LightTheme">#bf9a9d</color>
+
+    <color name="primaryTextColor_LightTheme">#ffffff</color>
+    <color name="secondaryTextColor_LightTheme">#000000</color>
+
+    <color name="primaryDisableTextColor_LightTheme">#55000000</color>
+
+    <color name="backdropTitleColor_LightTheme">#202F51</color>
+</resources>

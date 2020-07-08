@@ -2,7 +2,7 @@
  * origin code
  * https://github.com/klarson2/CustomCoordinatorLayoutBehavior/blob/master/app/src/main/java/com/krislarson/customcoordinatorlayoutbehavior/CollapsingImageBehavior.java
  */
-package com.jp.babyfood.util
+package com.jp.babyfood.util.behavior
 
 import android.content.Context
 import android.content.res.TypedArray

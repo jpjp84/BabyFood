@@ -8,4 +8,12 @@
     <declare-styleable name="GridRadioGroup">
         <attr name="checkedButton" format="reference" />
     </declare-styleable>
+
+    <attr name="colorDisableText" format="reference" />
+
+    <declare-styleable name="Backdrop">
+        <attr name="backdropTitleColor" format="reference" />
+        <attr name="lockable" format="boolean" />
+    </declare-styleable>
+
 </resources>

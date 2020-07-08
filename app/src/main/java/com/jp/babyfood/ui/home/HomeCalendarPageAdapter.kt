@@ -37,10 +37,6 @@ class HomeCalendarPageAdapter(private val viewModel: HomeViewModel) :
             binding.executePendingBindings()
         }
 
-        fun getChildAdapter(): CalendarAdapter {
-            return binding.calendarPageView.adapter as CalendarAdapter
-        }
-
         companion object {
             fun from(parent: ViewGroup): CalendarPageViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)

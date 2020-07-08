@@ -1,25 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- generated color -->
-    <color name="primaryColor">#81bcd9</color>
-    <color name="primaryLightColor">#b3eeff</color>
-    <color name="primaryDarkColor">#508ca7</color>
-
-    <color name="secondaryColor">#fbe9e7</color>
-    <color name="secondaryLightColor">#ffffff</color>
-    <color name="secondaryDarkColor">#c8b7b5</color>
-
-    <color name="primaryTextColor">#000</color>
-    <color name="primaryTextLightColor">#ffffff</color>
-    <color name="secondaryTextColor">#000000</color>
-    <color name="secondaryTextLightColor">#E0E0E0</color>
-
-    <color name="primaryDisableTextColor">#55000000</color>
+    <!-- common -->
+    <color name="border">#E0E0E0</color>
 
     <color name="baseBackgroundColor">#e0e0e0</color>
     <color name="contentBackgroundColor">#fff</color>
     <color name="accentColor">#D81B60</color>
-
-    <color name="border">#E0E0E0</color>
+    <color name="selectColor">#202F51</color>
 </resources>
