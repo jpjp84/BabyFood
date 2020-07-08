@@ -3,30 +3,34 @@ package com.jp.babyfood.ui.home
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.jp.babyfood.R
 import com.jp.babyfood.databinding.FragmentHomeBinding
 import com.jp.babyfood.ui.base.BaseFragment
 import com.jp.babyfood.ui.calendardetail.CalendarDetailFragment
 import com.jp.babyfood.ui.daylist.DayListFragment
 import com.jp.babyfood.util.EventObserver
-import com.jp.babyfood.util.behavior.LockableBottomSheetBehavior
+import com.jp.babyfood.util.dispatchers.CalendarBackdropDispatcher
 import com.jp.babyfood.util.dispatchers.HomePagerScrollDispatcher
-import com.orhanobut.logger.Logger
 import javax.inject.Inject
 
 
-class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
+class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(),
+    CalendarBackdropDispatcher.OpenFragment {
 
     @Inject
     lateinit var scrollDispatcher: HomePagerScrollDispatcher
+
+    private val backdropDispatcher by lazy {
+        CalendarBackdropDispatcher(
+            viewBinding.backdropLayout,
+            this
+        )
+    }
 
     private var adapter: HomeCalendarPageAdapter? = null
 
@@ -38,8 +42,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         setCalendarPager()
+        setBackdropHandler()
         setNavigation()
-        openCalendarDetail()
     }
 
     private fun setCalendarPager() {
@@ -88,52 +92,35 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         })
 
         viewModel.selectedDay.observe(viewLifecycleOwner, Observer {
-            val bottomSheetBehavior = BottomSheetBehavior.from(viewBinding.backdropLayout);
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
-            Logger.d("${findNavController()}")
+            backdropDispatcher.showDayListFragment()
         })
 
         viewModel.addNewFood.observe(viewLifecycleOwner, EventObserver {
-            val behavior: LockableBottomSheetBehavior<ConstraintLayout> =
-                BottomSheetBehavior.from(viewBinding.backdropLayout) as LockableBottomSheetBehavior
-            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            backdropDispatcher.showCalendarFragment()
         })
     }
 
-    private fun openCalendarDetail() {
-        val behavior: LockableBottomSheetBehavior<ConstraintLayout> =
-            BottomSheetBehavior.from(viewBinding.backdropLayout) as LockableBottomSheetBehavior
+    private fun setBackdropHandler() {
+        childFragmentManager.setFragmentResultListener(
+            "requestKey",
+            viewLifecycleOwner
+        ) { _, bundle ->
+            val result = bundle.getString("bundleKey")
+            backdropDispatcher.showCalendarFragment()
+        }
+    }
 
+    override fun attachDayListFragment() {
         childFragmentManager.beginTransaction()
             .replace(R.id.backdrop_fragment, DayListFragment())
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .commit()
+    }
 
-        // Use the Kotlin extension in the fragment-ktx artifact
-        childFragmentManager.setFragmentResultListener("requestKey", viewLifecycleOwner) {key, bundle ->
-            val result = bundle.getString("bundleKey")
-            behavior.state = BottomSheetBehavior.STATE_EXPANDED
-        }
-
-        behavior.addBottomSheetCallback(object : BottomSheetCallback() {
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-
-            }
-
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    behavior.isLock = false
-                    childFragmentManager.beginTransaction()
-                        .replace(R.id.backdrop_fragment, CalendarDetailFragment())
-                        .commit()
-                }
-                if (newState == BottomSheetBehavior.STATE_HALF_EXPANDED) {
-                    childFragmentManager.beginTransaction()
-                        .replace(R.id.backdrop_fragment, DayListFragment())
-                        .commit()
-                    behavior.isLock = true
-                    behavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
-                }
-            }
-        })
+    override fun attachCalendarFragment() {
+        childFragmentManager.beginTransaction()
+            .replace(R.id.backdrop_fragment, CalendarDetailFragment())
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .commit()
     }
 }

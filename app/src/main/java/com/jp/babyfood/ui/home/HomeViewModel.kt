@@ -100,6 +100,7 @@ class HomeViewModel @Inject constructor(
         day?.select = true
         _selectedDay.value = day
     }
+
     fun onAddClick() {
         _addNewFood.value = Event(true)
     }

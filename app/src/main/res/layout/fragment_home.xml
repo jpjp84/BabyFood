@@ -123,6 +123,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/bg_backdrop"
             android:elevation="20dp"
+
             app:behavior_fitToContents="false"
             app:behavior_halfExpandedRatio="0.4"
             app:behavior_peekHeight="56dp"
