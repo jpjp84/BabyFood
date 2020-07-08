@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.jp.babyfood.ui.home.HomeFragment"
-        android:label="Baby Food">
+        android:label="">
 
         <action
             android:id="@+id/action_homeFragment_to_dayListFragment"
@@ -41,9 +41,6 @@
         <action
             android:id="@+id/action_dayListFragment_to_calendarDetailFragment"
             app:destination="@id/calendarDetailFragment" />
-        <argument
-            android:name="day"
-            app:argType="com.jp.babyfood.data.entity.Day" />
     </fragment>
 
     <dialog

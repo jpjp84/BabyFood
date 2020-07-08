@@ -23,7 +23,7 @@ class DayListViewModel @Inject constructor(
         _day.value = initDay
     }
 
-    fun openCalendarDetail(food: Food?) {
-        _openCalendarDetailEvent.value = Event(food ?: Food())
+    fun openCalendarDetail() {
+        _openCalendarDetailEvent.value = Event(Food())
     }
 }

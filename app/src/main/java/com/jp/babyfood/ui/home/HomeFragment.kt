@@ -2,22 +2,35 @@ package com.jp.babyfood.ui.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.fragment.findNavController
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.jp.babyfood.R
-import com.jp.babyfood.data.entity.Day
 import com.jp.babyfood.databinding.FragmentHomeBinding
 import com.jp.babyfood.ui.base.BaseFragment
+import com.jp.babyfood.ui.calendardetail.CalendarDetailFragment
+import com.jp.babyfood.ui.daylist.DayListFragment
 import com.jp.babyfood.util.EventObserver
+import com.jp.babyfood.util.dispatchers.CalendarBackdropDispatcher
 import com.jp.babyfood.util.dispatchers.HomePagerScrollDispatcher
 import javax.inject.Inject
 
 
-class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
+class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(),
+    CalendarBackdropDispatcher.OpenFragment {
 
     @Inject
     lateinit var scrollDispatcher: HomePagerScrollDispatcher
+
+    private val backdropDispatcher by lazy {
+        CalendarBackdropDispatcher(
+            viewBinding.backdropLayout,
+            this
+        )
+    }
 
     private var adapter: HomeCalendarPageAdapter? = null
 
@@ -28,8 +41,9 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setNavigation()
         setCalendarPager()
+        setBackdropHandler()
+        setNavigation()
     }
 
     private fun setCalendarPager() {
@@ -66,10 +80,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     }
 
     private fun setNavigation() {
-        viewModel.openCalendarDetailEvent.observe(viewLifecycleOwner, EventObserver {
-            openCalendarDetail(it)
-        })
-
         viewModel.addNewPage.observe(viewLifecycleOwner, EventObserver {
             (viewBinding.homeCalendarPager.adapter as HomeCalendarPageAdapter).submitList(
                 viewModel.yearMonthMap.value?.keys,
@@ -77,18 +87,40 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             )
         })
 
-//        viewModel.onUpdateSavedDays.observe(viewLifecycleOwner, EventObserver {
-//            val viewHolder =
-//                viewBinding.homeCalendarPager.findViewHolderForAdapterPosition(it.first)
-//
-//            if (viewHolder is HomeCalendarPageAdapter.CalendarPageViewHolder) {
-//                viewHolder.getChildAdapter().submitList(it.second)
-//            }
-//        })
+        viewModel.selectedMonth.observe(viewLifecycleOwner, Observer {
+            (activity as AppCompatActivity).supportActionBar?.title = "${it.month} ${it.year}"
+        })
+
+        viewModel.selectedDay.observe(viewLifecycleOwner, Observer {
+            backdropDispatcher.showDayListFragment()
+        })
+
+        viewModel.addNewFood.observe(viewLifecycleOwner, EventObserver {
+            backdropDispatcher.showCalendarFragment()
+        })
     }
 
-    private fun openCalendarDetail(item: Day) {
-        val action = HomeFragmentDirections.actionHomeFragmentToDayListFragment(item)
-        findNavController().navigate(action)
+    private fun setBackdropHandler() {
+        childFragmentManager.setFragmentResultListener(
+            "requestKey",
+            viewLifecycleOwner
+        ) { _, bundle ->
+            val result = bundle.getString("bundleKey")
+            backdropDispatcher.showCalendarFragment()
+        }
+    }
+
+    override fun attachDayListFragment() {
+        childFragmentManager.beginTransaction()
+            .replace(R.id.backdrop_fragment, DayListFragment())
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .commit()
+    }
+
+    override fun attachCalendarFragment() {
+        childFragmentManager.beginTransaction()
+            .replace(R.id.backdrop_fragment, CalendarDetailFragment())
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .commit()
     }
 }

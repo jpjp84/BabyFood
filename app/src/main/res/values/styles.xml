@@ -1,31 +1,43 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
-        <item name="colorAccent">@color/accentColor</item>
-        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar" />
 
-    </style>
-
-    <style name="AppTheme.NoActionBar" parent="AppTheme">
+    <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.Popup" parent="AppTheme">
+    <style name="Popup" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="Toolbar" parent="AppTheme" />
-
     <style name="BottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView.Colored" />
 
     <style name="FullscreenDialogAnimation">
         <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
         <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
+    </style>
+
+    <!-- View Styles -->
+    <!-- Text -->
+    <style name="Text" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="Text.Title">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Text.Disable">
+        <item name="android:textColor">?attr/colorDisableText</item>
+    </style>
+
+    <style name="Text.Title.Backdrop">
+        <item name="android:textColor">?attr/backdropTitleColor</item>
     </style>
 </resources>

@@ -2,8 +2,8 @@ package com.jp.babyfood.ui.daylist
 
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import com.jp.babyfood.R
 import com.jp.babyfood.data.entity.Food
 import com.jp.babyfood.databinding.FragmentDaylistBinding
@@ -11,8 +11,6 @@ import com.jp.babyfood.ui.base.BaseFragment
 import com.jp.babyfood.util.EventObserver
 
 class DayListFragment : BaseFragment<DayListViewModel, FragmentDaylistBinding>() {
-
-    private val args: DayListFragmentArgs by navArgs()
 
     override fun getViewModelClass(): Class<DayListViewModel> = DayListViewModel::class.java
 
@@ -22,14 +20,14 @@ class DayListFragment : BaseFragment<DayListViewModel, FragmentDaylistBinding>()
         super.onViewCreated(view, savedInstanceState)
 
         setNavigation()
-        setDayListAdapter()
-        setAddBtn()
+//        setDayListAdapter()
+//        setAddBtn()
 
-        viewModel.initDayLists(args.day)
+//        viewModel.initDayLists(args.day)
     }
 
     private fun setDayListAdapter() {
-        viewBinding.dayListView.adapter = DayListAdapter(viewModel)
+//        viewBinding.dayListView.adapter = DayListAdapter(viewModel)
     }
 
     private fun setNavigation() {
@@ -39,11 +37,10 @@ class DayListFragment : BaseFragment<DayListViewModel, FragmentDaylistBinding>()
     }
 
     private fun setAddBtn() {
-        viewBinding.addDayBtn.postDelayed({ viewBinding.addDayBtn.show() }, 250)
+//        viewBinding.addDayBtn.postDelayed({ viewBinding.addDayBtn.show() }, 250)
     }
 
     private fun openCalendarDetail(item: Food?) {
-        val action = DayListFragmentDirections.actionDayListFragmentToCalendarDetailFragment(item)
-        findNavController().navigate(action)
+        setFragmentResult("requestKey", bundleOf("bundleKey" to "result"))
     }
 }
